@@ -94,7 +94,7 @@ That's it: text your bot. Everything else (WhatsApp, iMessage, calls, Google, cl
 <summary>Manual start (developers)</summary>
 
 ```powershell
-git clone https://github.com/<you>/DInstinct.git
+git clone https://github.com/ClaudioAk/DInstinct.git
 cd DInstinct
 npm install
 npm start
