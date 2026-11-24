@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DInstinct · your private AI assistant</title>
+<meta name="description" content="A private personal AI assistant you text on Telegram, WhatsApp, iMessage, by phone or Siri. It acts on websites for you and keeps every password encrypted on your own PC.">
+<meta property="og:title" content="DInstinct · your private AI assistant">
+<meta property="og:description" content="Text it like a friend. It does things on websites for you, and every password stays encrypted on your own PC.">
+<meta property="og:image" content="https://claudioak.github.io/DInstinct/images/10-home-dark.png">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJESW5zdGluY3QgZ3VhcmQiPgogIDwhLS0gaGVhZCAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjM4IiByPSIxNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDwhLS0gc3VuZ2xhc3NlcyAtLT4KICA8cGF0aCBkPSJNMTcgMzQgaDMwIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxwYXRoIGQ9Ik0xOCAzNCBxMCA3IDYgNyBxNiAwIDYtNyB6IiBmaWxsPSIjMjIyIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHBhdGggZD0iTTM0IDM0IHEwIDcgNiA3IHE2IDAgNi03IHoiIGZpbGw9IiMyMjIiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cGF0aCBkPSJNMjEgMzYgbDQgLTEuNSBNMzcgMzYgbDQgLTEuNSIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSBzbWlsZSAtLT4KICA8cGF0aCBkPSJNMjcgNDcgcTUgNCAxMCAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSBwb2xpY2UgY2FwIC0tPgogIDxwYXRoIGQ9Ik0xMiAxOSBxMjAgLTE0IDQwIDAgbC0zIDcgaC0zNCB6IiBmaWxsPSIjMWYyZjYzIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTTEzIDI2IGgzOCBxLTIgNSAtMTkgNSBxLTE3IDAgLTE5IC01IHoiIGZpbGw9IiMxODI0NGQiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHBhdGggZD0iTTMyIDEyIGwzLjUgMiBsLTAuNyA0LjIgbC0yLjggMiBsLTIuOCAtMiBsLTAuNyAtNC4yIHoiIGZpbGw9IiNlOGI4MzAiIHN0cm9rZT0iIzhhNmExMCIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+Cg==">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1c1a;--ink2:#5d5a54;--line:#e3e0da;--acc:#2f5bd3;--acc2:#1f3f9e;--ok:#1e7a3c;--bad:#b3261e;--panel:#ecebe6;--g-ink:#151515;--g-head:#ffffff;--g-cap:#1f2f63;--g-cap2:#16234c;--g-badge:#e3b22b;--g-glass:#1c1c1c;--g-glint:#8a8a8a;
+--g-gear:#3a3f48;--g-radio:#4c5563;--g-screen:#9fb3a0;--g-light:#f2d46b;--g-baton:#2c3140;--g-buckle:#b9bcc2;--g-shadow:rgba(40,40,70,.28);
+--g-scene:#9a978f;--g-bar:#c43b3b;--g-bar2:#f1e3b1;--g-sign:#ffffff;--g-post:#6a7286;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121214;--card:#1c1c1f;--ink:#eeece8;--ink2:#a8a49c;--line:#323236;--acc:#7d9bff;--acc2:#a9bcff;--ok:#7bd88f;--bad:#ff8a80;--panel:#18181b;--g-ink:#ecebe6;--g-head:#26272b;--g-cap:#3d5bb8;--g-cap2:#2d4592;--g-badge:#ffcf4d;--g-glass:#050505;--g-glint:#9fb8ff;
+--g-gear:#8a93a3;--g-radio:#7d8798;--g-screen:#7be3a0;--g-light:#ffe27a;--g-baton:#a9b3c7;--g-buckle:#d9dce3;--g-shadow:rgba(0,0,0,.55);
+--g-scene:#5f5d58;--g-bar:#e0605e;--g-bar2:#3a3833;--g-sign:#2b2b2e;--g-post:#7c859a;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#121214;--card:#1c1c1f;--ink:#eeece8;--ink2:#a8a49c;--line:#323236;--acc:#7d9bff;--acc2:#a9bcff;--ok:#7bd88f;--bad:#ff8a80;--panel:#18181b;--g-ink:#ecebe6;--g-head:#26272b;--g-cap:#3d5bb8;--g-cap2:#2d4592;--g-badge:#ffcf4d;--g-glass:#050505;--g-glint:#9fb8ff;
+--g-gear:#8a93a3;--g-radio:#7d8798;--g-screen:#7be3a0;--g-light:#ffe27a;--g-baton:#a9b3c7;--g-buckle:#d9dce3;--g-shadow:rgba(0,0,0,.55);
+--g-scene:#5f5d58;--g-bar:#e0605e;--g-bar2:#3a3833;--g-sign:#2b2b2e;--g-post:#7c859a;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--acc)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;color:var(--ink);text-decoration:none}
+.navr{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.navr a{text-decoration:none;font-weight:600;font-size:15px}
+.theme{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.theme button{border:0;background:transparent;color:var(--ink2);padding:5px 11px;font:600 12px system-ui;cursor:pointer}
+.theme button.on{background:var(--acc);color:#fff}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;padding:40px 0 30px}
+h1{font-size:clamp(34px,5vw,56px);line-height:1.05;margin:0 0 16px;letter-spacing:-.02em}
+.lead{font-size:19px;color:var(--ink2);margin:0 0 26px;max-width:560px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px}
+.btn.primary{background:var(--acc);color:#fff}.btn.primary:hover{background:var(--acc2)}
+.btn.ghost{border:1px solid var(--line);color:var(--ink);background:var(--card)}
+.small{font-size:13px;color:var(--ink2);margin-top:10px}
+.guard{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px 18px 10px;text-align:center}
+.guard .guard-art{width:100%;max-width:240px;height:auto;margin:0 auto}
+.guard p{margin:6px 0 0;font-size:13px;color:var(--ink2)}
+section{padding:34px 0}
+h2{font-size:30px;margin:0 0 8px;letter-spacing:-.01em}.sub{color:var(--ink2);margin:0 0 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{margin:6px 0 4px;font-size:17px}.card p{margin:0;color:var(--ink2);font-size:15px}.ico{font-size:24px}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.shots figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.shots img{display:block;width:100%;height:220px;object-fit:cover;object-position:top}
+.shots figcaption{padding:10px 14px;font-size:14px;color:var(--ink2)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px 16px 62px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:18px;top:15px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;display:grid;place-items:center}
+.cmp{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px}
+.cmp th,.cmp td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp th{background:var(--panel)}.cmp td:last-child{color:var(--ok);font-weight:600}
+.note{border-left:4px solid var(--acc);background:var(--card);padding:12px 16px;border-radius:8px;color:var(--ink2);font-size:14px}
+footer{padding:30px 0 50px;color:var(--ink2);font-size:14px;border-top:1px solid var(--line);margin-top:30px}
+code{font:14px ui-monospace,Consolas,monospace;background:var(--panel);padding:2px 6px;border-radius:5px}
+@media (max-width:820px){.hero{grid-template-columns:1fr}.guard{max-width:300px;margin:0 auto}.navr .hide-sm{display:none}}
+
+.guard-art,.mark-art{display:block}
+.g-line{stroke:var(--g-ink)}
+.g-head{fill:var(--g-head);stroke:var(--g-ink);stroke-width:3}
+.mark-art .g-head{stroke-width:2.5}
+.g-cap{fill:var(--g-cap);stroke:var(--g-ink);stroke-width:2.5;stroke-linejoin:round}
+.g-cap2{fill:var(--g-cap2);stroke:var(--g-ink);stroke-width:2.5;stroke-linejoin:round}
+.g-badge{fill:var(--g-badge);stroke:var(--g-ink);stroke-width:1}
+.g-badge-text{stroke:var(--g-head);stroke-width:1.6}
+.g-glass{fill:var(--g-glass);stroke:var(--g-ink);stroke-width:1.5}
+.g-glint{stroke:var(--g-glint)}
+.g-gear{fill:var(--g-gear);stroke:var(--g-ink);stroke-width:1.5}
+.g-radio{fill:var(--g-radio);stroke:var(--g-ink);stroke-width:1.5}
+.g-screen{fill:var(--g-screen)}
+.g-light{fill:var(--g-light);stroke:var(--g-ink);stroke-width:1}
+.g-buckle{fill:var(--g-buckle);stroke:var(--g-ink);stroke-width:1}
+.g-baton{stroke:var(--g-baton)}
+.g-shadow{fill:var(--g-shadow)}
+.g-post{fill:var(--g-post);stroke:var(--g-ink);stroke-width:1.5}
+.g-bar{fill:var(--g-bar2);stroke:var(--g-ink);stroke-width:1.5}
+.g-bar-stripe{fill:var(--g-bar)}
+.g-fence{fill:none;stroke:var(--g-scene);stroke-width:2}
+.g-mesh{fill:none;stroke:var(--g-scene);stroke-width:1}
+.g-sign{fill:var(--g-sign);stroke:var(--g-ink);stroke-width:1.5}
+.g-sign-text{stroke:var(--g-ink);stroke-width:2}
+.g-scene .g-line{stroke:var(--g-scene)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="#"><svg class="mark-art" width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+  <circle cx="32" cy="38" r="17" class="g-head"/>
+  <path d="M17 34 h30" class="g-line" stroke-width="2"/>
+  <path d="M18 34 q0 7 6 7 q6 0 6-7 z" class="g-glass"/>
+  <path d="M34 34 q0 7 6 7 q6 0 6-7 z" class="g-glass"/>
+  <path d="M27 47 q5 4 10 0" fill="none" class="g-line" stroke-width="2" stroke-linecap="round"/>
+  <path d="M12 19 q20 -14 40 0 l-3 7 h-34 z" class="g-cap"/>
+  <path d="M13 26 h38 q-2 5 -19 5 q-17 0 -19 -5 z" class="g-cap2"/>
+  <path d="M32 12 l3.5 2 l-0.7 4.2 l-2.8 2 l-2.8 -2 l-0.7 -4.2 z" class="g-badge"/>
+</svg><span>DInstinct</span></a>
+  <div class="navr">
+    <a class="hide-sm" href="#features">Features</a><a class="hide-sm" href="#privacy">Privacy</a><a class="hide-sm" href="#install">Install</a>
+    <a href="https://github.com/ClaudioAk/DInstinct">GitHub</a>
+    <div class="theme" role="group" aria-label="Theme"><button data-t="auto">Auto</button><button data-t="light">Light</button><button data-t="dark">Dark</button></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div>
+    <h1>Your private AI assistant.<br>Just text it.</h1>
+    <p class="lead">DInstinct does real things on websites for you (bookings, orders, forms, your accounts) while every password stays <b>encrypted on your own PC</b>. Chat with it on Telegram, WhatsApp, iMessage, by phone or with Siri.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/ClaudioAk/DInstinct/releases/latest/download/DInstinct.zip">⬇ Download for Windows</a>
+      <a class="btn ghost" href="https://github.com/ClaudioAk/DInstinct">View on GitHub</a>
+    </div>
+    <p class="small">Free and open source (MIT). Windows 10/11. Works with Claude, free models, or fully offline.</p>
+  </div>
+  <div class="guard"><svg class="guard-art" viewBox="0 0 260 470" role="img" aria-label="DInstinct security guard">
+  <!-- gate barrier and fence behind him -->
+  <g class="g-scene">
+    <rect x="6" y="300" width="20" height="62" rx="4" class="g-post"/>
+    <path d="M24 318 L96 312 L96 324 L24 330 Z" class="g-bar"/>
+    <path d="M38 317 l8 -1 l-4 13 l-8 1 z M62 315 l8 -1 l-4 13 l-8 1 z M84 313 l8 -1 l-2 12 l-8 1 z" class="g-bar-stripe"/>
+    <path d="M196 236 V372" class="g-line" stroke-width="3"/>
+    <path d="M196 240 H254 V372 H196" class="g-fence"/>
+    <path d="M196 252 l58 58 M196 282 l58 58 M196 312 l58 58 M196 342 l30 30 M214 240 l40 40 M234 240 l20 20 M254 252 l-58 58 M254 282 l-58 58 M254 312 l-58 58 M254 342 l-30 30 M234 240 l-38 38 M214 240 l-18 18" class="g-mesh"/>
+    <rect x="203" y="262" width="44" height="22" rx="2" class="g-sign"/>
+    <path d="M209 270 h32 M209 277 h24" class="g-sign-text"/>
+  </g>
+  <!-- shadow -->
+  <ellipse cx="130" cy="452" rx="84" ry="10" class="g-shadow"/>
+  <!-- legs -->
+  <path d="M130 268 L84 440 L66 444 M130 268 L176 440 L196 444" class="g-line" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- body -->
+  <path d="M130 150 V270" class="g-line" stroke-width="5" stroke-linecap="round"/>
+  <!-- arms, hands on hips -->
+  <path d="M130 170 L74 214 L112 250 M130 170 L186 214 L148 250" class="g-line" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- chest badge -->
+  <path d="M140 180 h22 v12 q0 10 -11 15 q-11 -5 -11 -15 z" class="g-cap"/>
+  <path d="M145 188 h12 M146 194 h10" class="g-badge-text"/>
+  <!-- duty belt: radio, buckle, flashlight, baton -->
+  <rect x="102" y="246" width="56" height="9" rx="2" class="g-gear"/>
+  <rect x="124" y="244" width="12" height="13" rx="2" class="g-buckle"/>
+  <path d="M96 228 v-14" class="g-line" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="88" y="228" width="16" height="30" rx="3" class="g-radio"/>
+  <rect x="92" y="233" width="8" height="8" rx="1" class="g-screen"/>
+  <rect x="150" y="252" width="10" height="34" rx="3" class="g-gear"/>
+  <rect x="149" y="282" width="12" height="6" rx="2" class="g-light"/>
+  <path d="M166 246 L178 312" class="g-baton" stroke-width="9" stroke-linecap="round"/>
+  <!-- head -->
+  <circle cx="130" cy="104" r="44" class="g-head"/>
+  <!-- sunglasses -->
+  <path d="M86 102 h88" class="g-line" stroke-width="2.5"/>
+  <path d="M92 100 q0 18 17 18 q15 0 16 -18 z" class="g-glass"/>
+  <path d="M135 100 q1 18 16 18 q17 0 17 -18 z" class="g-glass"/>
+  <path d="M99 106 l10 -4 M142 106 l10 -4" class="g-glint" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- smile -->
+  <path d="M116 128 q14 9 28 -2" fill="none" class="g-line" stroke-width="3" stroke-linecap="round"/>
+  <!-- police cap -->
+  <path d="M80 70 Q130 22 182 66 L176 84 H86 Z" class="g-cap"/>
+  <path d="M84 84 H178 Q174 96 130 97 Q88 96 84 84 Z" class="g-cap2"/>
+  <circle cx="176" cy="82" r="3" class="g-badge"/>
+  <path d="M130 46 l7 4 l-1.5 8 l-5.5 4 l-5.5 -4 l-1.5 -8 z" class="g-badge"/>
+</svg><p><b>On duty.</b> No bank information, ever.</p></div>
+</header>
+
+<section id="features">
+  <h2>What it does</h2><p class="sub">An agent that acts for you, with guard rails built into the code.</p>
+  <div class="grid"><div class="card"><div class="ico">🤖</div><h3>An agent with its own browser</h3><p>Give it a goal and it plans, opens websites, signs in, fills forms, books and orders, then reports back.</p></div><div class="card"><div class="ico">🔐</div><h3>Encrypted vault on your PC</h3><p>Passwords, API keys and tokens live in one file encrypted with your master password (scrypt + AES-256-GCM).</p></div><div class="card"><div class="ico">🙈</div><h3>The AI never sees secrets</h3><p>The model only sees names and sites. Values are typed straight into the page, only on the sites you allowed.</p></div><div class="card"><div class="ico">🔗</div><h3>Secure one-time links</h3><p>Missing a login? It sends you a one-time link to add it. It never asks for passwords in chat.</p></div><div class="card"><div class="ico">🚫</div><h3>No bank information, ever</h3><p>Card numbers, CVC, IBAN, account numbers and PINs are refused in code, with any AI model.</p></div><div class="card"><div class="ico">💬</div><h3>Text it anywhere</h3><p>Telegram (pair with a 6-digit code), WhatsApp, iMessage, phone calls, or &quot;Hey Siri&quot;.</p></div><div class="card"><div class="ico">⏰</div><h3>It messages you first</h3><p>Reminders, a morning briefing, calendar-clash alerts and emails nobody answered, with quiet hours.</p></div><div class="card"><div class="ico">📧</div><h3>Google Workspace</h3><p>Gmail, Calendar, Drive, Docs, Sheets, Slides and Tasks. Sending and editing always ask YES first.</p></div><div class="card"><div class="ico">🧠</div><h3>Your choice of AI</h3><p>Any Claude model (one-click sign-in), free models via FreeLLMAPI, or fully private on your PC.</p></div><div class="card"><div class="ico">💳</div><h3>Spending limits</h3><p>Per-order and monthly limits, checked before an order is even proposed. Every purchase needs your YES.</p></div><div class="card"><div class="ico">🧾</div><h3>Your data, your call</h3><p>Activity log, export without secrets, and delete-everything with your master password.</p></div><div class="card"><div class="ico">🌗</div><h3>Friendly for everyone</h3><p>A step-by-step setup guide in plain words, light and dark mode, and an on-duty guard.</p></div></div>
+</section>
+
+<section id="screens">
+  <h2>See it</h2><p class="sub">Plain words, one thing per step, light or dark.</p>
+  <div class="shots"><figure><a href="images/02-setup-guide-brain.png"><img src="images/02-setup-guide-brain.png" alt="Step-by-step setup guide" loading="lazy"></a><figcaption>Step-by-step setup guide</figcaption></figure><figure><a href="images/03-setup-guide-chat.png"><img src="images/03-setup-guide-chat.png" alt="Pair Telegram with a code" loading="lazy"></a><figcaption>Pair Telegram with a code</figcaption></figure><figure><a href="images/05-vault.png"><img src="images/05-vault.png" alt="The encrypted vault" loading="lazy"></a><figcaption>The encrypted vault</figcaption></figure><figure><a href="images/07-settings.png"><img src="images/07-settings.png" alt="Simple settings" loading="lazy"></a><figcaption>Simple settings</figcaption></figure><figure><a href="images/08-whatsapp-setup.png"><img src="images/08-whatsapp-setup.png" alt="Guided WhatsApp setup" loading="lazy"></a><figcaption>Guided WhatsApp setup</figcaption></figure><figure><a href="images/09-data-and-privacy.png"><img src="images/09-data-and-privacy.png" alt="Your data and connections" loading="lazy"></a><figcaption>Your data and connections</figcaption></figure></div>
+</section>
+
+<section id="privacy">
+  <h2>Private by design</h2><p class="sub">Hosted assistants keep your logins on their servers. DInstinct keeps them with you.</p>
+  <table class="cmp">
+    <tr><th></th><th>Typical hosted assistant</th><th>DInstinct</th></tr>
+    <tr><td>Where passwords live</td><td>The provider's servers</td><td>An encrypted file on your PC</td></tr>
+    <tr><td>Can the AI read them?</td><td>Often optional</td><td>Never</td></tr>
+    <tr><td>Bank and card details</td><td>Stored for purchases</td><td>Refused in code</td></tr>
+    <tr><td>Which AI model</td><td>Theirs</td><td>Your choice, even offline</td></tr>
+    <tr><td>Sending, buying, deleting</td><td>Settings-dependent</td><td>Always asks you YES first</td></tr>
+    <tr><td>Your data</td><td>Licence to their service</td><td>Export or delete it any time</td></tr>
+  </table>
+  <p class="note" style="margin-top:16px">Website and email content is treated as untrusted data, never as instructions. Only you are answered on every channel, and the settings pages only open on your own PC.</p>
+</section>
+
+<section id="install">
+  <h2>Install in 5 minutes</h2><p class="sub">No technical knowledge needed.</p>
+  <ol class="steps">
+    <li><b><a href="https://github.com/ClaudioAk/DInstinct/releases/latest/download/DInstinct.zip">Download DInstinct.zip</a></b>, right-click it → <i>Extract All</i>.</li>
+    <li>Open the folder and double-click <b>Install DInstinct.cmd</b>. If Windows shows "Windows protected your PC", click <i>More info → Run anyway</i>. It installs what's needed and adds a desktop icon.</li>
+    <li>A page opens. Choose a <b>master password</b>. It protects everything and can't be recovered, so keep it safe.</li>
+    <li>Follow the <b>setup guide</b>: click <i>Sign in with Claude</i> (or pick free models), pair Telegram with a 6-digit code, and turn on phone access.</li>
+    <li>Text your assistant: <i>"Find me a padel court for Saturday morning."</i></li>
+  </ol>
+  <p class="small">Developers: <code>git clone https://github.com/ClaudioAk/DInstinct.git</code> → <code>npm install</code> → <code>npm start</code>. Node 24+.</p>
+</section>
+
+<footer>
+  DInstinct is an independent open-source project (MIT licence). It is not affiliated with Instinct, Anthropic, Meta, Apple, Google, Telegram, Sendblue, Twilio, Cloudflare or FreeLLMAPI.
+  · <a href="https://github.com/ClaudioAk/DInstinct">Source code</a> · <a href="https://github.com/ClaudioAk/DInstinct/blob/main/SECURITY.md">Security</a> · <a href="https://github.com/ClaudioAk/DInstinct/releases">Releases</a>
+</footer>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, btns=document.querySelectorAll('.theme button');
+  function set(t){ root.setAttribute('data-theme',t); btns.forEach(function(b){b.classList.toggle('on',b.dataset.t===t)}); try{localStorage.setItem('dinstinct-theme',t)}catch(e){} }
+  var saved='auto'; try{saved=localStorage.getItem('dinstinct-theme')||'auto'}catch(e){}
+  set(saved); btns.forEach(function(b){b.addEventListener('click',function(){set(b.dataset.t)})});
+})();
+</script>
+</body>
+</html>
