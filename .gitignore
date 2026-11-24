@@ -1,0 +1,21 @@
+# Personal data: encrypted vault, settings, activity log, browser profile, certificates
+data/
+*.dat
+*.pem
+*.cer
+*.crt
+audit.log
+
+# Secrets and local environment
+.env
+.env.*
+*.key
+
+# Dependencies and tooling
+node_modules/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/
