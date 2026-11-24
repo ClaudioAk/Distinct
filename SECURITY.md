@@ -1,6 +1,6 @@
 # Security policy
 
-DInstinct handles logins and acts on websites for its owner, so security reports are very welcome.
+Distinct handles logins and acts on websites for its owner, so security reports are very welcome.
 
 ## Reporting a vulnerability
 Please **do not open a public issue**. Use GitHub's **"Report a vulnerability"** button on the repository's *Security* tab (private advisory). Include steps to reproduce and the impact you see.

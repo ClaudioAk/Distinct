@@ -1,5 +1,5 @@
 // Guided WhatsApp setup through Meta's Graph API, so the owner only pastes three things
-// (App ID, App secret, access token) and DInstinct does the rest:
+// (App ID, App secret, access token) and Distinct does the rest:
 //  - checks each one right away
 //  - finds the WhatsApp Business account and phone number from the token
 //  - registers its own webhook with Meta (and re-registers when the secure address changes)
@@ -29,7 +29,7 @@ function friendly(m: string): string {
   if (/client secret|app secret/i.test(m)) return "That App secret doesn't match the App ID.";
   if (/(#131030)|not in allowed list|Recipient phone number not in allowed list/i.test(m))
     return "Meta's test number can only message numbers you add first: in Meta's API Setup, put your number in the 'To' field and confirm the code WhatsApp sends you.";
-  if (/callback|verify/i.test(m)) return `Meta couldn't reach DInstinct to check the connection (${m}). Make sure "Reach me on my phone" is on, then try again.`;
+  if (/callback|verify/i.test(m)) return `Meta couldn't reach Distinct to check the connection (${m}). Make sure "Reach me on my phone" is on, then try again.`;
   return m;
 }
 
@@ -67,7 +67,7 @@ export async function listNumbers(v: string, token: string, wabaIds: string[]): 
 }
 
 /**
- * Points WhatsApp messages at DInstinct, following Meta's documented steps:
+ * Points WhatsApp messages at Distinct, following Meta's documented steps:
  *  1. subscribe the app to the WhatsApp Business ("Messaging") account: POST /{waba}/subscribed_apps (no body)
  *  2. override that account's webhook address: POST /{waba}/subscribed_apps {override_callback_uri, verify_token}
  *     (Meta then calls our webhook once to verify it).

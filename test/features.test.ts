@@ -6,12 +6,12 @@ import os from "node:os";
 import path from "node:path";
 import { createHmac } from "node:crypto";
 
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-feat-"));
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), "distinct-feat-"));
 fs.writeFileSync(
   path.join(dir, "config.json"),
   JSON.stringify({ port: 7796, publicUrl: "https://example.test", ownerName: "Alex", phone: { enabled: true, allowedNumbers: ["+201000000000"], language: "en-US" }, notifyChannel: "none" }),
 );
-process.env.DINSTINCT_DATA = dir;
+process.env.DISTINCT_DATA = dir;
 const { loadConfig } = await import("../src/config.ts");
 const { App } = await import("../src/app.ts");
 const { startWeb } = await import("../src/web.ts");

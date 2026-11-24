@@ -1,4 +1,4 @@
-// Proactive engine: DInstinct starts the conversation.
+// Proactive engine: Distinct starts the conversation.
 //  - Reminders you (or the agent) set
 //  - A morning briefing: today's agenda, calendar clashes, bookings coming up,
 //    important unread mail, and emails you sent that nobody answered
@@ -187,7 +187,7 @@ const obj = (properties: Record<string, any>, required: string[]) => ({ type: "o
 export const REMINDER_TOOLS: ToolDef[] = [
   {
     name: "remind_me",
-    description: "Set a reminder: DInstinct will message the owner at that time. 'when' is an ISO date-time with timezone offset.",
+    description: "Set a reminder: Distinct will message the owner at that time. 'when' is an ISO date-time with timezone offset.",
     input_schema: obj({ text: { type: "string" }, when: { type: "string" } }, ["text", "when"]),
   },
   { name: "list_reminders", description: "List upcoming reminders.", input_schema: obj({}, []) },

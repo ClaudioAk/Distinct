@@ -1,4 +1,4 @@
-// One-click "reach me on my phone": runs a Cloudflare quick tunnel so links DInstinct sends
+// One-click "reach me on my phone": runs a Cloudflare quick tunnel so links Distinct sends
 // (secure vault links, iMessage/WhatsApp/phone webhooks) work away from this PC.
 // Only the public routes are reachable through it; the admin pages stay PC-only.
 import { spawn, spawnSync, type ChildProcess } from "node:child_process";

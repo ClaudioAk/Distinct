@@ -36,7 +36,7 @@ type Session = {
   send: Sender; // replies go to whichever channel the owner last wrote from
 };
 
-const SYSTEM = (owner: string) => `You are DInstinct, the private personal assistant of ${owner || "your owner"}. They talk to you by chat (iMessage, Telegram, WhatsApp or a Siri Shortcut). You get real things done for them with your own web browser: research, bookings, orders, forms, managing their online accounts.
+const SYSTEM = (owner: string) => `You are Distinct, the private personal assistant of ${owner || "your owner"}. They talk to you by chat (iMessage, Telegram, WhatsApp or a Siri Shortcut). You get real things done for them with your own web browser: research, bookings, orders, forms, managing their online accounts.
 
 How to work:
 - Use browser_open / browser_snapshot to read pages, then browser_click / browser_type with the [ref] numbers from the LATEST snapshot.
@@ -114,7 +114,7 @@ export class Core {
       await send("I removed what looked like a card or bank number from your message. I never handle bank information, so please don't send it. Delete that message from this chat.");
     }
     audit("inbound", { channel, chars: t.length });
-    if (!this.vault.isUnlocked()) return send("DInstinct is locked. Unlock it on your PC first.");
+    if (!this.vault.isUnlocked()) return send("Distinct is locked. Unlock it on your PC first.");
     if (/^\/?(stop|cancel|وقف|الغاء|إلغاء)$/i.test(t)) {
       if (s.busy) {
         s.abort = true;
@@ -185,7 +185,7 @@ export class Core {
       audit("model_switched", { model: hit.id });
       return `Switched to free model ${hit.id}.`;
     }
-    if (this.cfg.llm.provider !== "claude") return "You're using the private local model. Switch to Claude in DInstinct → Settings first.";
+    if (this.cfg.llm.provider !== "claude") return "You're using the private local model. Switch to Claude in Distinct → Settings first.";
     let models: ModelInfo[] = [];
     try {
       models = await this.modelLister(this.cfg.llm, this.vault.getSystem("anthropic_api_key"));

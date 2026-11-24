@@ -5,12 +5,12 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-im-"));
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), "distinct-im-"));
 fs.writeFileSync(
   path.join(dir, "config.json"),
   JSON.stringify({ port: 7797, imessage: { enabled: true, fromNumber: "+15550009999", allowedHandles: ["+20 100 000 0000", "Me@iCloud.com"] } }),
 );
-process.env.DINSTINCT_DATA = dir;
+process.env.DISTINCT_DATA = dir;
 const { loadConfig } = await import("../src/config.ts");
 const { App } = await import("../src/app.ts");
 const { startWeb } = await import("../src/web.ts");

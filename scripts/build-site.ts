@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url";
 import { ART_CSS, ART_DARK, ART_LIGHT, GUARD_SVG, MARK_SVG } from "../src/art.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const REPO = "https://github.com/ClaudioAk/DInstinct";
-const DOWNLOAD = `${REPO}/releases/latest/download/DInstinct.zip`;
+const REPO = "https://github.com/ClaudioAk/Distinct";
+const DOWNLOAD = `${REPO}/releases/latest/download/Distinct.zip`;
 
 const LIGHT = `--bg:#f6f5f2;--card:#fff;--ink:#1d1c1a;--ink2:#5d5a54;--line:#e3e0da;--acc:#2f5bd3;--acc2:#1f3f9e;--ok:#1e7a3c;--bad:#b3261e;--panel:#ecebe6;${ART_LIGHT}`;
 const DARK = `--bg:#121214;--card:#1c1c1f;--ink:#eeece8;--ink2:#a8a49c;--line:#323236;--acc:#7d9bff;--acc2:#a9bcff;--ok:#7bd88f;--bad:#ff8a80;--panel:#18181b;${ART_DARK}`;
@@ -44,11 +44,11 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DInstinct · your private AI assistant</title>
+<title>Distinct · your private AI assistant</title>
 <meta name="description" content="A private personal AI assistant you text on Telegram, WhatsApp, iMessage, by phone or Siri. It acts on websites for you and keeps every password encrypted on your own PC.">
-<meta property="og:title" content="DInstinct · your private AI assistant">
+<meta property="og:title" content="Distinct · your private AI assistant">
 <meta property="og:description" content="Text it like a friend. It does things on websites for you, and every password stays encrypted on your own PC.">
-<meta property="og:image" content="https://claudioak.github.io/DInstinct/images/10-home-dark.png">
+<meta property="og:image" content="https://claudioak.github.io/Distinct/images/10-home-dark.png">
 <link rel="icon" href="data:image/svg+xml;base64,${Buffer.from(fs.readFileSync(path.join(ROOT, "assets", "logo-mark.svg"), "utf8")).toString("base64")}">
 <style>
 :root{${LIGHT};color-scheme:light}
@@ -100,7 +100,7 @@ ${ART_CSS}
 <body>
 <div class="wrap">
 <nav>
-  <a class="brand" href="#">${MARK_SVG(34)}<span>DInstinct</span></a>
+  <a class="brand" href="#">${MARK_SVG(34)}<span>Distinct</span></a>
   <div class="navr">
     <a class="hide-sm" href="#features">Features</a><a class="hide-sm" href="#privacy">Privacy</a><a class="hide-sm" href="#install">Install</a>
     <a href="${REPO}">GitHub</a>
@@ -111,7 +111,7 @@ ${ART_CSS}
 <header class="hero">
   <div>
     <h1>Your private AI assistant.<br>Just text it.</h1>
-    <p class="lead">DInstinct does real things on websites for you (bookings, orders, forms, your accounts) while every password stays <b>encrypted on your own PC</b>. Chat with it on Telegram, WhatsApp, iMessage, by phone or with Siri.</p>
+    <p class="lead">Distinct does real things on websites for you (bookings, orders, forms, your accounts) while every password stays <b>encrypted on your own PC</b>. Chat with it on Telegram, WhatsApp, iMessage, by phone or with Siri.</p>
     <div class="cta">
       <a class="btn primary" href="${DOWNLOAD}">⬇ Download for Windows</a>
       <a class="btn ghost" href="${REPO}">View on GitHub</a>
@@ -132,9 +132,9 @@ ${ART_CSS}
 </section>
 
 <section id="privacy">
-  <h2>Private by design</h2><p class="sub">Hosted assistants keep your logins on their servers. DInstinct keeps them with you.</p>
+  <h2>Private by design</h2><p class="sub">Hosted assistants keep your logins on their servers. Distinct keeps them with you.</p>
   <table class="cmp">
-    <tr><th></th><th>Typical hosted assistant</th><th>DInstinct</th></tr>
+    <tr><th></th><th>Typical hosted assistant</th><th>Distinct</th></tr>
     <tr><td>Where passwords live</td><td>The provider's servers</td><td>An encrypted file on your PC</td></tr>
     <tr><td>Can the AI read them?</td><td>Often optional</td><td>Never</td></tr>
     <tr><td>Bank and card details</td><td>Stored for purchases</td><td>Refused in code</td></tr>
@@ -148,8 +148,8 @@ ${ART_CSS}
 <section id="install">
   <h2>Install in 5 minutes</h2><p class="sub">No technical knowledge needed.</p>
   <ol class="steps">
-    <li><b><a href="${DOWNLOAD}">Download DInstinct.zip</a></b>, right-click it → <i>Extract All</i>.</li>
-    <li>Open the folder and double-click <b>Install DInstinct.cmd</b>. If Windows shows "Windows protected your PC", click <i>More info → Run anyway</i>. It installs what's needed and adds a desktop icon.</li>
+    <li><b><a href="${DOWNLOAD}">Download Distinct.zip</a></b>, right-click it → <i>Extract All</i>.</li>
+    <li>Open the folder and double-click <b>Install Distinct.cmd</b>. If Windows shows "Windows protected your PC", click <i>More info → Run anyway</i>. It installs what's needed and adds a desktop icon.</li>
     <li>A page opens. Choose a <b>master password</b>. It protects everything and can't be recovered, so keep it safe.</li>
     <li>Follow the <b>setup guide</b>: click <i>Sign in with Claude</i> (or pick free models), pair Telegram with a 6-digit code, and turn on phone access.</li>
     <li>Text your assistant: <i>"Find me a padel court for Saturday morning."</i></li>
@@ -158,15 +158,15 @@ ${ART_CSS}
 </section>
 
 <footer>
-  DInstinct is an independent open-source project (MIT licence). It is not affiliated with Instinct, Anthropic, Meta, Apple, Google, Telegram, Sendblue, Twilio, Cloudflare or FreeLLMAPI.
+  Distinct is an independent open-source project (MIT licence). It is not affiliated with Instinct, Anthropic, Meta, Apple, Google, Telegram, Sendblue, Twilio, Cloudflare or FreeLLMAPI.
   · <a href="${REPO}">Source code</a> · <a href="${REPO}/blob/main/SECURITY.md">Security</a> · <a href="${REPO}/releases">Releases</a>
 </footer>
 </div>
 <script>
 (function(){
   var root=document.documentElement, btns=document.querySelectorAll('.theme button');
-  function set(t){ root.setAttribute('data-theme',t); btns.forEach(function(b){b.classList.toggle('on',b.dataset.t===t)}); try{localStorage.setItem('dinstinct-theme',t)}catch(e){} }
-  var saved='auto'; try{saved=localStorage.getItem('dinstinct-theme')||'auto'}catch(e){}
+  function set(t){ root.setAttribute('data-theme',t); btns.forEach(function(b){b.classList.toggle('on',b.dataset.t===t)}); try{localStorage.setItem('distinct-theme',t)}catch(e){} }
+  var saved='auto'; try{saved=localStorage.getItem('distinct-theme')||'auto'}catch(e){}
   set(saved); btns.forEach(function(b){b.addEventListener('click',function(){set(b.dataset.t)})});
 })();
 </script>

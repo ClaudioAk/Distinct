@@ -67,7 +67,7 @@ export class WhatsApp {
               this.allowed.add(from);
               this.lastFrom = from;
               this.status = "paired";
-              this.send(from, "✅ Paired! I'm your DInstinct assistant. Ask me anything, e.g. \"book a table for two on Friday\".").catch(() => {});
+              this.send(from, "✅ Paired! I'm your Distinct assistant. Ask me anything, e.g. \"book a table for two on Friday\".").catch(() => {});
               continue;
             }
             audit("whatsapp_rejected", { from });

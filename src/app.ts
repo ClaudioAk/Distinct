@@ -186,7 +186,7 @@ export class App {
     if (this.vault.isUnlocked()) this.startChannels();
   }
 
-  /** Wipes everything DInstinct stored on this PC, after revoking Google access. */
+  /** Wipes everything Distinct stored on this PC, after revoking Google access. */
   async deleteEverything(): Promise<void> {
     await this.core.google.disconnect().catch(() => {});
     await this.lock();
@@ -196,7 +196,7 @@ export class App {
     audit("everything_deleted");
   }
 
-  /** Export of what DInstinct knows, without any secret values. */
+  /** Export of what Distinct knows, without any secret values. */
   exportData(): unknown {
     const v = this.vault;
     let auditLog = "";

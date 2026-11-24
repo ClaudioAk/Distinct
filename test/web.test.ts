@@ -6,9 +6,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-web-"));
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), "distinct-web-"));
 fs.writeFileSync(path.join(dir, "config.json"), JSON.stringify({ port: 7798, publicUrl: "https://example.test" }));
-process.env.DINSTINCT_DATA = dir;
+process.env.DISTINCT_DATA = dir;
 const { loadConfig } = await import("../src/config.ts");
 const { App } = await import("../src/app.ts");
 const { startWeb } = await import("../src/web.ts");

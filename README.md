@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/images/10-home-dark.png" alt="DInstinct home page in dark mode" width="820">
+  <img src="docs/images/10-home-dark.png" alt="Distinct home page in dark mode" width="820">
 </p>
 
-<h1 align="center">DInstinct</h1>
+<h1 align="center">Distinct</h1>
 
 <p align="center">
   <b>A private personal AI assistant you text on Telegram, WhatsApp, iMessage, by phone call or Siri.</b><br>
@@ -17,18 +17,18 @@
 </p>
 
 <p align="center">
-  <a href="https://claudioak.github.io/DInstinct/"><b>🌐 Website</b></a> &nbsp;·&nbsp;
-  <a href="https://github.com/ClaudioAk/DInstinct/releases/latest/download/DInstinct.zip"><b>⬇ Download for Windows</b></a> &nbsp;·&nbsp;
+  <a href="https://claudioak.github.io/Distinct/"><b>🌐 Website</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/ClaudioAk/Distinct/releases/latest/download/Distinct.zip"><b>⬇ Download for Windows</b></a> &nbsp;·&nbsp;
   <a href="#quick-start"><b>Quick start</b></a>
 </p>
 
 ---
 
-DInstinct is an **agent**: give it a goal ("book a padel court for Saturday", "make me a playlist on Anghami", "chase the landlord about the deposit") and it plans, opens websites in its own browser, signs in with logins from your vault, asks you when it needs something, and finishes the job.
+Distinct is an **agent**: give it a goal ("book a padel court for Saturday", "make me a playlist on Anghami", "chase the landlord about the deposit") and it plans, opens websites in its own browser, signs in with logins from your vault, asks you when it needs something, and finishes the job.
 
 It follows the idea of hosted assistants like Instinct (you just text it, it uses a computer the way you do), but it is **self-hosted and private by design**: your vault, tokens, memories and logs live in one encrypted file on your machine, you choose the AI model, and bank information is refused in code.
 
-> DInstinct is an independent open-source project. It is not affiliated with Instinct, Anthropic, Meta, Apple, Google, Telegram, Sendblue, Twilio, Cloudflare or FreeLLMAPI.
+> Distinct is an independent open-source project. It is not affiliated with Instinct, Anthropic, Meta, Apple, Google, Telegram, Sendblue, Twilio, Cloudflare or FreeLLMAPI.
 
 ## Contents
 - [Features](#features)
@@ -86,7 +86,7 @@ It follows the idea of hosted assistants like Instinct (you just text it, it use
 **Requirements:** Windows 10/11 and Microsoft Edge (preinstalled). The installer adds Node.js if it's missing.
 
 1. Download this repository (green **Code** button → **Download ZIP**) and unzip it, or `git clone` it.
-2. Double-click **`Install DInstinct.cmd`**. It installs Node.js if needed, gets DInstinct's parts, puts a **DInstinct** icon on your desktop, and can start it with Windows.
+2. Double-click **`Install Distinct.cmd`**. It installs Node.js if needed, gets Distinct's parts, puts a **Distinct** icon on your desktop, and can start it with Windows.
 3. A page opens at `http://127.0.0.1:7777`. Choose a **master password** (12+ characters; it can't be recovered).
 4. The **setup guide** walks you through four short steps:
    - **Brain:** click **Sign in with Claude** (no key to copy), or pick **Free models** or **Private**.
@@ -100,8 +100,8 @@ That's it: text your bot. Everything else (WhatsApp, iMessage, calls, Google, cl
 <summary>Manual start (developers)</summary>
 
 ```powershell
-git clone https://github.com/ClaudioAk/DInstinct.git
-cd DInstinct
+git clone https://github.com/ClaudioAk/Distinct.git
+cd Distinct
 npm install
 npm start
 ```
@@ -110,7 +110,7 @@ npm start
 
 ## How your secrets stay safe
 
-| | Typical hosted assistant | DInstinct |
+| | Typical hosted assistant | Distinct |
 |---|---|---|
 | Where passwords live | The provider's servers | `data/vault.dat` on your PC |
 | Encryption | Not visible to you | AES-256-GCM, key from your master password (scrypt N=2¹⁷); header bound as AAD so tampering is detected |
@@ -132,11 +132,11 @@ More protections:
 
 | Option | Cost | Privacy | How |
 |---|---|---|---|
-| **Claude** (recommended) | Pay-as-you-go | Messages go to Anthropic's API (not used for training by default) | **Sign in with Claude**: DInstinct installs Anthropic's official `ant` tool and opens the normal sign-in page. Or paste an API key. |
+| **Claude** (recommended) | Pay-as-you-go | Messages go to Anthropic's API (not used for training by default) | **Sign in with Claude**: Distinct installs Anthropic's official `ant` tool and opens the normal sign-in page. Or paste an API key. |
 | **Free models** | Free | Goes to the free providers you add (check their terms) | Install [FreeLLMAPI](https://freellmapi.co) from the Microsoft Store, add free keys (Gemini, Groq…), paste its key. |
 | **Private** | Free | Never leaves your PC | Install [Ollama](https://ollama.com) and pull a model; needs a strong PC. |
 
-- **Any Claude model:** Settings lists every model your account can use (live from Anthropic). DInstinct reads each model's capabilities and adapts the request (adaptive thinking and effort only where supported), so older and newer models both work.
+- **Any Claude model:** Settings lists every model your account can use (live from Anthropic). Distinct reads each model's capabilities and adapts the request (adaptive thinking and effort only where supported), so older and newer models both work.
 - **`private:`** at the start of a message keeps that one task on the local model.
 
 ## Chat channels
@@ -144,7 +144,7 @@ More protections:
 | Channel | What you need | Setup |
 |---|---|---|
 | **Telegram** (easiest) | A free bot from @BotFather | Setup guide → paste token → tap link → paired by code |
-| **WhatsApp** | A free Meta developer app (test number included) | **Set up WhatsApp** page: paste App ID + App secret, then the access token; DInstinct finds the number, registers its webhook (Graph API v27.0, `override_callback_uri`) and pairs you by code |
+| **WhatsApp** | A free Meta developer app (test number included) | **Set up WhatsApp** page: paste App ID + App secret, then the access token; Distinct finds the number, registers its webhook (Graph API v27.0, `override_callback_uri`) and pairs you by code |
 | **iMessage** | A [Sendblue](https://sendblue.com) account (paid; no Mac needed) | Settings → Advanced → iMessage; add the receive webhook shown on the home page |
 | **Phone calls** | A [Twilio](https://twilio.com) number | Set "A call comes in" to `https://<public-url>/voice/incoming`; paste the auth token |
 | **Siri Shortcut** | An iPhone | *Dictate Text* → *Get Contents of URL* (POST JSON `{text}` with `Authorization: Bearer <token>`) → *Speak Text* |
@@ -165,7 +165,7 @@ More protections:
 - No telemetry. Nothing is sent anywhere except the AI provider you chose, the sites the assistant visits for you, and the chat services you connected.
 
 ## Company networks (firewalls)
-Some workplace firewalls (Fortinet, Zscaler, Sophos…) inspect secure connections with their own certificate. DInstinct starts Node.js with `--use-system-ca --use-env-proxy` so it trusts Windows' certificates and uses the system proxy, explains a blocked connection in plain words (it names the firewall), and lets you paste the firewall's certificate under **Settings → Advanced → Company network certificate**. The cleanest fix is to ask IT to exclude `api.anthropic.com` from SSL inspection.
+Some workplace firewalls (Fortinet, Zscaler, Sophos…) inspect secure connections with their own certificate. Distinct starts Node.js with `--use-system-ca --use-env-proxy` so it trusts Windows' certificates and uses the system proxy, explains a blocked connection in plain words (it names the firewall), and lets you paste the firewall's certificate under **Settings → Advanced → Company network certificate**. The cleanest fix is to ask IT to exclude `api.anthropic.com` from SSL inspection.
 
 ## Chat commands
 | Command | What it does |
@@ -205,10 +205,10 @@ npm test
 ```
 The suite uses fake models and simulated services (Meta Graph API, Sendblue, Twilio, FreeLLMAPI), so it needs no accounts or network. It covers encryption at rest, wrong passwords and tampering, site-locked fills, the AI never seeing secrets, the bank rule, purchase approval and spending limits, WhatsApp/Twilio/iMessage webhook authentication, pairing, the setup guide, Google tool confirmations, proactive messages and data deletion.
 
-Set `DINSTINCT_DATA` to a temporary folder to run a throwaway instance without touching your real vault.
+Set `DISTINCT_DATA` to a temporary folder to run a throwaway instance without touching your real vault.
 
 ## Security notes
-- DInstinct is a **single-user, personal** assistant. Run it on a PC you trust and keep the master password safe.
+- Distinct is a **single-user, personal** assistant. Run it on a PC you trust and keep the master password safe.
 - An AI agent with a browser can make mistakes. Keep spending limits low and read confirmation messages before replying YES.
 - With a cloud browser, a vault value is sent to that browser at the moment it is typed into one of the entry's allowed sites.
 - Free model providers may use prompts to improve their models; use Claude or `private:` for sensitive tasks.

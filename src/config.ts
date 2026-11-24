@@ -6,7 +6,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const DATA = process.env.DINSTINCT_DATA ? path.resolve(process.env.DINSTINCT_DATA) : path.join(ROOT, "data");
+// DISTINCT_DATA picks another data folder (tests, demos). The pre-rename DINSTINCT_DATA still works.
+const DATA_ENV = process.env.DISTINCT_DATA || process.env.DINSTINCT_DATA;
+export const DATA = DATA_ENV ? path.resolve(DATA_ENV) : path.join(ROOT, "data");
 
 export type Config = {
   ownerName: string;
@@ -34,7 +36,7 @@ export type Config = {
   whatsapp: { enabled: boolean; phoneNumberId: string; allowedNumbers: string[]; graphVersion: string; appId: string; wabaId: string; displayNumber: string; tokenExpires: number };
   imessage: { enabled: boolean; fromNumber: string; allowedHandles: string[] };
   iphone: { enabled: boolean };
-  notifyChannel: "imessage" | "telegram" | "whatsapp" | "none"; // primary channel for messages DInstinct starts
+  notifyChannel: "imessage" | "telegram" | "whatsapp" | "none"; // primary channel for messages Distinct starts
   ui: { theme: "auto" | "light" | "dark" };
   remoteAccess: boolean; // run the secure tunnel automatically when unlocked
   setupDone: boolean;

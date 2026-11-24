@@ -17,10 +17,10 @@ const app = new App(cfg);
 const server = startWeb(app);
 
 server.on("listening", () => {
-  console.log(`DInstinct is running. Open http://127.0.0.1:${cfg.port} on this PC to ${app.vault.exists() ? "unlock it" : "set it up"}.`);
+  console.log(`Distinct is running. Open http://127.0.0.1:${cfg.port} on this PC to ${app.vault.exists() ? "unlock it" : "set it up"}.`);
 });
 server.on("error", (e: any) => {
-  console.error(e.code === "EADDRINUSE" ? `Port ${cfg.port} is already in use (is DInstinct already running?)` : e);
+  console.error(e.code === "EADDRINUSE" ? `Port ${cfg.port} is already in use (is Distinct already running?)` : e);
   process.exit(1);
 });
 

@@ -67,7 +67,7 @@ export class Google {
     this.pending.delete(state);
     if (!p || Date.now() > p.expires) throw new Error("This sign-in link expired. Try connecting again.");
     const t = await this.#token({ grant_type: "authorization_code", code, code_verifier: p.verifier, redirect_uri: this.redirectUri });
-    if (!t.refresh_token) throw new Error("Google didn't return a refresh token. Remove DInstinct's access at myaccount.google.com/permissions and connect again.");
+    if (!t.refresh_token) throw new Error("Google didn't return a refresh token. Remove Distinct's access at myaccount.google.com/permissions and connect again.");
     this.s.set("google_refresh_token", t.refresh_token);
     this.access = t.access_token;
     this.accessExp = Date.now() + (t.expires_in - 60) * 1000;
@@ -99,7 +99,7 @@ export class Google {
 
   async accessToken(): Promise<string> {
     if (this.access && Date.now() < this.accessExp) return this.access;
-    if (!this.connected()) throw new Error("Google isn't connected. Connect it on your PC in DInstinct → Data & connections.");
+    if (!this.connected()) throw new Error("Google isn't connected. Connect it on your PC in Distinct → Data & connections.");
     const t = await this.#token({ grant_type: "refresh_token", refresh_token: this.s.get("google_refresh_token") });
     this.access = t.access_token;
     this.accessExp = Date.now() + (t.expires_in - 60) * 1000;

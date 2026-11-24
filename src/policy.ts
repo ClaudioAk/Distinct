@@ -1,11 +1,11 @@
-// Hard rule: DInstinct never handles bank information, with any model (cloud or local).
+// Hard rule: Distinct never handles bank information, with any model (cloud or local).
 // No card numbers, CVC, expiry, IBAN, account/routing/sort codes, SWIFT/BIC or PINs are
 // stored in the vault, typed into websites, or passed to the AI. This is enforced here in
 // code, not just asked of the model. Purchases may only use a payment method the owner has
 // already saved on the merchant's own site, after confirm_purchase.
 
 export const BANK_RULE =
-  "DInstinct never handles bank information (card numbers, CVC, expiry, IBAN, account or routing numbers, PINs).";
+  "Distinct never handles bank information (card numbers, CVC, expiry, IBAN, account or routing numbers, PINs).";
 
 const BANK_WORDS =
   /(credit|debit)?.?card.?(number|no|num)|cardnumber|\bcc.?(num|number|csc|cvv|exp)|\bcvv|\bcvc|\bcsc\b|security.?code|card.?code|expir|\bexp.?(date|month|year)|\biban\b|\bswift\b|\bbic\b|routing|sort.?code|account.?(number|no|num)|acct|bank|\bpin\b|pin.?code|\bcard\b/i;

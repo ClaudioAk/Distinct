@@ -1,5 +1,5 @@
 // Phone calls through Twilio Voice: call the assistant's number and just talk.
-// Twilio turns your speech into text, DInstinct answers, Twilio reads the reply aloud.
+// Twilio turns your speech into text, Distinct answers, Twilio reads the reply aloud.
 // Tasks that take longer than a few seconds continue after the call and the result is
 // texted to your primary channel. Every webhook is verified with Twilio's signature.
 import { createHmac, timingSafeEqual } from "node:crypto";

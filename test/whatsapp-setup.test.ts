@@ -7,9 +7,9 @@ import os from "node:os";
 import path from "node:path";
 import { createHmac } from "node:crypto";
 
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-wa-"));
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), "distinct-wa-"));
 fs.writeFileSync(path.join(dir, "config.json"), JSON.stringify({ port: 7795, publicUrl: "https://abc.trycloudflare.com" }));
-process.env.DINSTINCT_DATA = dir;
+process.env.DISTINCT_DATA = dir;
 const { loadConfig } = await import("../src/config.ts");
 const { App } = await import("../src/app.ts");
 const { startWeb } = await import("../src/web.ts");
@@ -24,7 +24,7 @@ globalThis.fetch = (async (url: any, init: any = {}) => {
   if (!u.startsWith("https://graph.facebook.com")) return realFetch(url, init);
   calls.push({ method: init.method ?? "GET", url: u, body: String(init.body ?? ""), auth: init.headers?.authorization ?? "" });
   const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status });
-  if (u.includes(`/${APP_ID}?fields=id,name`)) return u.includes(encodeURIComponent(`${APP_ID}|${SECRET}`)) ? json({ id: APP_ID, name: "My DInstinct" }) : json({ error: { message: "Error validating client secret" } }, 400);
+  if (u.includes(`/${APP_ID}?fields=id,name`)) return u.includes(encodeURIComponent(`${APP_ID}|${SECRET}`)) ? json({ id: APP_ID, name: "My Distinct" }) : json({ error: { message: "Error validating client secret" } }, 400);
   if (u.includes("/debug_token"))
     return json({ data: { is_valid: true, app_id: APP_ID, expires_at: Math.floor(Date.now() / 1000) + 86400, scopes: ["whatsapp_business_messaging", "whatsapp_business_management"], granular_scopes: [{ scope: "whatsapp_business_messaging", target_ids: ["777"] }] } });
   if (u.includes("/777/phone_numbers")) return json({ data: [{ id: "555000", display_phone_number: "+1 555-010-9999", verified_name: "Test Number" }] });
@@ -60,7 +60,7 @@ async function flow(app: any) {
   };
 
   assert.match(await post("/whatsapp/app", { appId: APP_ID, secret: "f".repeat(32) }), /doesn't match/);
-  assert.match(await post("/whatsapp/app", { appId: APP_ID, secret: SECRET }), /Found your app "My DInstinct"/);
+  assert.match(await post("/whatsapp/app", { appId: APP_ID, secret: SECRET }), /Found your app "My Distinct"/);
   assert.match(await post("/whatsapp/token", { token: TOKEN }), /Found your WhatsApp number \+1 555-010-9999/);
   assert.equal(app.cfg.whatsapp.phoneNumberId, "555000");
   assert.equal(app.cfg.whatsapp.wabaId, "777");

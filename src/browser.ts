@@ -98,7 +98,7 @@ export class Browser {
 
   async bb(pathname: string, body: unknown): Promise<any> {
     const key = this.secret("browserbase_api_key");
-    if (!key) throw new Error("Cloud browser: add your Browserbase API key in DInstinct settings.");
+    if (!key) throw new Error("Cloud browser: add your Browserbase API key in Distinct settings.");
     const r = await fetch(BB + pathname, {
       method: "POST",
       headers: { "X-BB-API-Key": key, "content-type": "application/json" },
@@ -111,7 +111,7 @@ export class Browser {
   /** Cloud browser through Browserbase, with a persistent context so sites stay signed in. */
   async connectBrowserbase(): Promise<any> {
     if (!this.cfg.browserbaseContextId) {
-      const c = await this.bb("/contexts", { name: "dinstinct" }).catch(() => this.bb("/contexts", {}));
+      const c = await this.bb("/contexts", { name: "distinct" }).catch(() => this.bb("/contexts", {}));
       this.cfg.browserbaseContextId = c.id;
       this.saveContextId(c.id);
     }
@@ -137,7 +137,7 @@ export class Browser {
         if (mode === "browserbase") this.remote = await this.connectBrowserbase();
         else {
           const url = this.secret("cloud_browser_cdp_url");
-          if (!/^wss?:\/\//.test(url)) throw new Error("Cloud browser: add the CDP WebSocket URL (wss://…) in DInstinct settings.");
+          if (!/^wss?:\/\//.test(url)) throw new Error("Cloud browser: add the CDP WebSocket URL (wss://…) in Distinct settings.");
           this.remote = await chromium.connectOverCDP(url);
         }
         this.remote.on("disconnected", () => {

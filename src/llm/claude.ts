@@ -95,19 +95,19 @@ export function claudeProvider(cfg: Config["llm"], apiKey: string): Provider {
     },
     describeError(err: unknown): string | null {
       if (err instanceof Anthropic.AuthenticationError)
-        return "I'm not signed in to Claude any more. On your PC, open DInstinct → Settings → Sign in with Claude.";
+        return "I'm not signed in to Claude any more. On your PC, open Distinct → Settings → Sign in with Claude.";
       if (err instanceof Anthropic.NotFoundError)
-        return `The model "${cfg.claudeModel}" isn't available on your account. Pick another one in DInstinct → Settings.`;
+        return `The model "${cfg.claudeModel}" isn't available on your account. Pick another one in Distinct → Settings.`;
       if (err instanceof Anthropic.APIError && /credit balance|billing|purchase credits/i.test(err.message))
         return "Your Claude account is out of credit. Add some at console.anthropic.com/settings/billing, then ask me again.";
       if (err instanceof Anthropic.RateLimitError) return "Claude is rate-limited right now. Try again in a minute.";
       if (err instanceof Anthropic.APIConnectionError)
         return isCertError(err)
-          ? "Your network's firewall is blocking my secure connection to Claude. Ask IT to allow api.anthropic.com (details on your PC in DInstinct → Settings)."
+          ? "Your network's firewall is blocking my secure connection to Claude. Ask IT to allow api.anthropic.com (details on your PC in Distinct → Settings)."
           : "Couldn't reach Claude. Check the internet connection.";
       if (err instanceof Anthropic.APIError) return `Claude API error ${err.status ?? ""}: ${err.message}`;
       if (err instanceof Error && /resolve authentication|profile/i.test(err.message))
-        return "Claude isn't connected yet. On your PC, open DInstinct and click 'Sign in with Claude'.";
+        return "Claude isn't connected yet. On your PC, open Distinct and click 'Sign in with Claude'.";
       return null;
     },
   };

@@ -12,7 +12,7 @@ import { toOllama } from "../src/llm/ollama.ts";
 import { WhatsApp } from "../src/channels/whatsapp.ts";
 
 async function setup(script: (msgs: any[]) => any) {
-  const v = new Vault(path.join(fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-")), "vault.dat"));
+  const v = new Vault(path.join(fs.mkdtempSync(path.join(os.tmpdir(), "distinct-")), "vault.dat"));
   await v.create("correct horse battery");
   const core = new Core(structuredClone(DEFAULTS), v);
   const seen: any[] = [];
@@ -82,7 +82,7 @@ test("bank rule: no card requests, no card typing, chat card numbers redacted", 
   const t = JSON.stringify(seen);
   assert.ok(!t.includes("4242 4242"), "card number reached the model");
   assert.match(out[0], /removed what looked like a card/);
-  assert.equal((JSON.stringify(seen.at(-1)).match(/Refused: DInstinct never handles bank information/g) ?? []).length, 2);
+  assert.equal((JSON.stringify(seen.at(-1)).match(/Refused: Distinct never handles bank information/g) ?? []).length, 2);
   assert.deepEqual(typed, ["Cairo 11511"], "only the address may be typed");
   assert.equal(filled, "", "nothing typed into the CVC field");
   assert.equal(core.fills.size, 0, "no fill link created");

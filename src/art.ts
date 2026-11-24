@@ -1,7 +1,7 @@
-// The DInstinct guard, drawn as inline SVG so its colors follow the light/dark theme
+// The Distinct guard, drawn as inline SVG so its colors follow the light/dark theme
 // (every color is a CSS variable defined in web.ts).
 
-export const GUARD_SVG = `<svg class="guard-art" viewBox="0 0 260 470" role="img" aria-label="DInstinct security guard">
+export const GUARD_SVG = `<svg class="guard-art" viewBox="0 0 260 470" role="img" aria-label="Distinct security guard">
   <!-- gate barrier and fence behind him -->
   <g class="g-scene">
     <rect x="6" y="300" width="20" height="62" rx="4" class="g-post"/>

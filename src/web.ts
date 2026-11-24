@@ -82,7 +82,7 @@ function page(title: string, body: string, opts: PageOpts | boolean = {}): strin
         .map((t) => `<button name="theme" value="${t}" class="${ui.theme === t ? "on" : ""}" title="${t === "auto" ? "Follow the system" : t + " mode"}">${t === "auto" ? "Auto" : t === "light" ? "Light" : "Dark"}</button>`)
         .join("")}</form>`
     : "";
-  const brand = `<a class="brand" href="/">${MARK_SVG(34)}<span>DInstinct</span></a>`;
+  const brand = `<a class="brand" href="/">${MARK_SVG(34)}<span>Distinct</span></a>`;
   return `<!doctype html><html data-theme="${ui.theme}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="${MARK_URI}"><title>${esc(title)}</title><style>${CSS}</style></head><body><div class="shell">
 <aside class="side">${GUARD_SVG}<p><b>On duty.</b> Your secrets stay encrypted on this PC. No bank information, ever.</p></aside>
@@ -162,16 +162,16 @@ export function startWeb(app: App): http.Server {
     const note = msg ? `<p class="bad">${esc(msg)}</p>` : "";
     if (!v.exists())
       return page(
-        "DInstinct setup",
-        `${hero()}<h1>Welcome to DInstinct</h1><p class="sub">Create the master password for your vault. It encrypts every password, login and API key on this PC. There is no way to recover it, so store it somewhere safe.</p>${note}
+        "Distinct setup",
+        `${hero()}<h1>Welcome to Distinct</h1><p class="sub">Create the master password for your vault. It encrypts every password, login and API key on this PC. There is no way to recover it, so store it somewhere safe.</p>${note}
 <form class="card" method="post" action="/setup">${csrf()}<label>Master password (at least ${MIN_PASSWORD} characters)</label><input type="password" name="password" autocomplete="new-password" required minlength="${MIN_PASSWORD}">
 <label>Repeat it</label><input type="password" name="password2" autocomplete="new-password" required><button>Create encrypted vault</button></form>`,
         { nav: false, local: true },
       );
     if (!v.isUnlocked())
       return page(
-        "DInstinct locked",
-        `${hero()}<h1>DInstinct is locked</h1><p class="sub">Enter your master password. Chats and the browser only run while the vault is unlocked.</p>${note}
+        "Distinct locked",
+        `${hero()}<h1>Distinct is locked</h1><p class="sub">Enter your master password. Chats and the browser only run while the vault is unlocked.</p>${note}
 <form class="card" method="post" action="/unlock">${csrf()}<label>Master password</label><input type="password" name="password" autocomplete="current-password" autofocus required><button>Unlock</button></form>`,
         { nav: false, local: true },
       );
@@ -179,8 +179,8 @@ export function startWeb(app: App): http.Server {
     const pub = c.publicUrl.replace(/\/$/, "");
     const st = (on: boolean, s: string) => `<span class="${on ? "ok" : "hint"}">${esc(s)}</span>`;
     return page(
-      "DInstinct",
-      `<h1>${c.ownerName ? `Hi ${esc(c.ownerName)}` : "DInstinct"}</h1><p class="sub">Your assistant is <b class="ok">on duty</b> · ${app.core.session.busy ? "working on a task" : "ready"} · ${esc(app.core.llm().name)}</p>${note}
+      "Distinct",
+      `<h1>${c.ownerName ? `Hi ${esc(c.ownerName)}` : "Distinct"}</h1><p class="sub">Your assistant is <b class="ok">on duty</b> · ${app.core.session.busy ? "working on a task" : "ready"} · ${esc(app.core.llm().name)}</p>${note}
 ${!c.setupDone ? `<div class="card" style="border-color:var(--acc)"><h2>Finish setting up</h2><p>A few quick steps and you can text your assistant from your phone.</p><a href="/welcome?step=1"><button type="button">Continue setup</button></a></div>` : ""}
 <div class="card"><h2>Reach me on my phone</h2>${
         app.tunnel.state === "on"
@@ -221,7 +221,7 @@ ${!c.setupDone ? `<div class="card" style="border-color:var(--acc)"><h2>Finish s
       `<h1>Vault</h1><p class="sub">Encrypted on this PC. The assistant can see names, sites and field names, never values, and can only type a value into the sites listed.</p>${msg ? `<p class="bad">${esc(msg)}</p>` : ""}
 <div class="card"><table><tr><th>Name</th><th>Allowed sites</th><th>Fields</th><th></th></tr>${rows || '<tr><td colspan="4" class="hint">Empty</td></tr>'}</table></div>
 <form class="card" method="post" action="/vault/add">${csrf()}<h2>Add or update an entry</h2>
-<p class="rule">${esc(BANK_RULE)} Saving one is refused. For shopping, keep a payment method saved on the store's own site; DInstinct asks you before every order.</p>
+<p class="rule">${esc(BANK_RULE)} Saving one is refused. For shopping, keep a payment method saved on the store's own site; Distinct asks you before every order.</p>
 <div class="row"><div><label>Name</label><input name="name" required placeholder="Anghami"></div><div><label>Kind</label><select name="kind">${ENTRY_KINDS.map((k) => `<option>${k}</option>`).join("")}</select></div></div>
 <label>Allowed sites (comma separated)</label><input name="sites" placeholder="anghami.com">
 <div class="row"><div><label>Username / email</label><input name="username" autocomplete="off"></div><div><label>Password</label><input type="password" name="password" autocomplete="new-password"></div></div>
@@ -261,7 +261,7 @@ ${c.llm.provider === "free" ? freeModelPicker() : modelPicker()}
 <div class="card"><h2>AI fine-tuning</h2><div class="row">
 <div><label>Other Claude model ID (overrides the list; e.g. a new or older model)</label><input name="claudeModelCustom" placeholder="claude-…" autocomplete="off"></div><div><label>Thinking effort (lower = faster and cheaper)</label><select name="claudeEffort">${["low", "medium", "high", "xhigh", "max"].map((e) => sel(e, c.llm.claudeEffort)).join("")}</select></div></div>
 <div class="row"><div><label>Ollama URL</label><input name="ollamaUrl" value="${esc(c.llm.ollamaUrl)}"></div><div><label>Ollama model</label><input name="ollamaModel" value="${esc(c.llm.ollamaModel)}"></div></div>
-<label>Public URL (filled in automatically by "Reach me on my phone"; set your own fixed address here)</label><input name="publicUrl" value="${esc(c.publicUrl)}" placeholder="https://dinstinct.example.com"></div>
+<label>Public URL (filled in automatically by "Reach me on my phone"; set your own fixed address here)</label><input name="publicUrl" value="${esc(c.publicUrl)}" placeholder="https://distinct.example.com"></div>
 <div class="card"><h2>Browser</h2><label>Where the assistant browses</label><select name="browserMode">
 <option value="auto"${c.browser.mode === "auto" ? " selected" : ""}>Automatic (cloud if a Browserbase key is saved, otherwise this PC)</option>
 <option value="browserbase"${c.browser.mode === "browserbase" ? " selected" : ""}>Cloud: Browserbase (keeps logins between tasks)</option>
@@ -287,7 +287,7 @@ ${secretInput("twilio_auth_token", "Twilio auth token (verifies calls)")}
 <p class="hint">In Twilio, set your number's "A call comes in" webhook to <code>${esc(c.publicUrl || "(public URL)")}/voice/incoming</code> (HTTP POST).</p></div>
 <div class="card"><h2>Siri Shortcut</h2><label>${chk("iphoneEnabled", c.iphone.enabled)}Enabled</label></div>
 <div class="card"><h2>Company network certificate</h2>
-<p class="hint">Only if your workplace firewall (Fortinet, Zscaler, Sophos…) inspects secure connections and DInstinct says it can't reach Claude. Ask IT for the firewall's <i>SSL inspection CA certificate</i> and paste it here. ${fs.existsSync(path.join(DATA, "company-ca.pem")) ? `<b>Currently trusted:</b> ${esc(companyCAName())}. Type <b>clear</b> to remove.` : ""}</p>
+<p class="hint">Only if your workplace firewall (Fortinet, Zscaler, Sophos…) inspects secure connections and Distinct says it can't reach Claude. Ask IT for the firewall's <i>SSL inspection CA certificate</i> and paste it here. ${fs.existsSync(path.join(DATA, "company-ca.pem")) ? `<b>Currently trusted:</b> ${esc(companyCAName())}. Type <b>clear</b> to remove.` : ""}</p>
 <textarea name="company_ca" rows="4" placeholder="-----BEGIN CERTIFICATE-----" spellcheck="false"></textarea></div>
 <div class="card"><h2>Google Workspace OAuth client</h2><p class="hint">Google Cloud console → APIs &amp; Services → Credentials → OAuth client ID → <b>Web application</b>, redirect URI <code>http://127.0.0.1:${c.port}/google/callback</code>. Then connect on the Data &amp; connections page.</p>
 <label>Client ID</label><input name="google_client_id" value="${esc(app.vault.getSystem("google_client_id"))}" autocomplete="off">${secretInput("google_client_secret", "Client secret")}</div>
@@ -345,7 +345,7 @@ ${c.llm.provider === "free" ? freeCard(true) : claudeCard(true)}
       const t = app.tunnel;
       refresh = t.state === "installing" || t.state === "starting";
       const status =
-        t.state === "on" ? `<p class="ok">✓ On. Your phone can now open the secure links DInstinct sends you.</p><a href="/welcome?step=4"><button type="button">Continue</button></a>`
+        t.state === "on" ? `<p class="ok">✓ On. Your phone can now open the secure links Distinct sends you.</p><a href="/welcome?step=4"><button type="button">Continue</button></a>`
         : refresh ? `<p>${esc(t.message || "Working…")}</p><p class="hint">This page updates by itself.</p>`
         : `${t.state === "error" ? `<p class="bad">${esc(t.message)}</p>` : ""}<form method="post" action="/welcome/remote">${csrf()}<button>Turn on</button></form>`;
       body = `<h1>Let it reach your phone</h1><p class="sub">When your assistant needs a password, it sends you a secure link instead of asking in the chat. Turn this on so those links open on your phone, not only on this PC.</p>${dots}
@@ -353,7 +353,7 @@ ${c.llm.provider === "free" ? freeCard(true) : claudeCard(true)}
     } else {
       const local = !app.core.browser.isCloud();
       body = `<h1>Sign in to your accounts</h1><p class="sub">Your assistant uses its own browser. Sign in there once (Gmail, Amazon, your favourite shops…) and it stays signed in.</p>${dots}${msg ? `<p class="ok">${esc(msg)}</p>` : ""}
-<div class="card">${local ? `<form method="post" action="/welcome/signin">${csrf()}<button>Open the assistant's browser</button></form><p class="hint">A browser window opens on this PC. Sign in to the sites you use, then just leave it. Don't save bank cards there; DInstinct never handles bank details.</p>` : `<p>Your assistant uses a cloud browser. When it needs to sign in somewhere, it will send you a secure link.</p>`}</div>
+<div class="card">${local ? `<form method="post" action="/welcome/signin">${csrf()}<button>Open the assistant's browser</button></form><p class="hint">A browser window opens on this PC. Sign in to the sites you use, then just leave it. Don't save bank cards there; Distinct never handles bank details.</p>` : `<p>Your assistant uses a cloud browser. When it needs to sign in somewhere, it will send you a secure link.</p>`}</div>
 <form method="post" action="/welcome/finish">${csrf()}<button>Finish</button></form>`;
     }
     const html = page("Welcome", body, { nav: false, local: true });
@@ -418,7 +418,7 @@ ${app.freeStatus.message ? `<p class="bad">${esc(app.freeStatus.message)}</p>` :
 <p>WhatsApp needs a free "app" at Meta (Facebook's company). It takes about 5 minutes:</p>
 <p>1. Click <a href="https://business.facebook.com/business/loginpage/?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F" target="_blank" rel="noopener"><b>Open Meta for Developers</b></a> and click <b>Continue with Facebook</b> (or <i>Create new account</i>). You land on <b>My Apps</b>.
 <br><span class="hint">First time? Meta first asks you to register as a developer (confirm your phone/email, accept the terms). Then click <b>My Apps</b> at the top right.</span></p>
-<p>&nbsp;&nbsp;&nbsp;Click <b>Create App</b>. Type a name (e.g. "My DInstinct") and your email.</p>
+<p>&nbsp;&nbsp;&nbsp;Click <b>Create App</b>. Type a name (e.g. "My Distinct") and your email.</p>
 <p>2. Choose the use case <b>Connect with customers through WhatsApp</b> → <b>Next</b>.</p>
 <p>3. Pick your business portfolio, or create one (any name is fine) → <b>Next</b> → <b>Create app</b>.</p>
 <p>4. On the <b>Quickstart</b> page click <b>Start using the API</b>. If asked, choose or create a WhatsApp Business account; Meta gives you a free test number.</p>
@@ -431,20 +431,20 @@ ${app.freeStatus.message ? `<p class="bad">${esc(app.freeStatus.message)}</p>` :
       const exp = w.tokenExpires ? ` · token expires ${new Date(w.tokenExpires).toLocaleString()}` : " · permanent token";
       cards.push(done(2, "WhatsApp number", `${esc(w.displayNumber)}${exp}`));
     } else if (current === 2)
-      cards.push(`<div class="card" style="border-color:var(--acc)"><h2>2. Give DInstinct access to the number</h2>${msgs}
+      cards.push(`<div class="card" style="border-color:var(--acc)"><h2>2. Give Distinct access to the number</h2>${msgs}
 <p>1. In your Meta app, open <b>API Setup</b> (from Quickstart: <i>Start using the API</i>).</p>
 <p>2. Click <b>Generate access token</b> (allow the permissions it asks for), then copy the long code.</p>
-<p>3. Paste it here. DInstinct finds your WhatsApp number by itself.</p>
+<p>3. Paste it here. Distinct finds your WhatsApp number by itself.</p>
 <form method="post" action="/whatsapp/token">${csrf()}<label>Access token</label><input name="token" type="password" autocomplete="off" required placeholder="EAAG…"><button>Check and save</button></form>
 <p class="hint">While you're on API Setup: with Meta's free <b>test number</b>, put your own WhatsApp number in the <b>To</b> field and confirm the code WhatsApp sends you. The test number can only reply to numbers added there.</p></div>`);
-    else cards.push(todo(2, "Give DInstinct access to the number"));
+    else cards.push(todo(2, "Give Distinct access to the number"));
 
     // 3. Webhook
     const manual = `<details style="margin-top:10px"><summary class="hint" style="cursor:pointer">Messages not arriving? Set it in Meta by hand</summary>
 <p class="hint">In your Meta app open <b>Use cases → Customize → Configuration</b> (older apps: <b>WhatsApp → Configuration</b>). Under Webhook click <b>Edit</b>:</p>
 <p class="hint">Callback URL: <code>${esc((app.cfg.publicUrl || "(turn on phone access first)").replace(/\/$/, ""))}/wa/webhook</code><br>Verify token: <code>${esc(v.getSystem("whatsapp_verify_token"))}</code></p>
-<p class="hint">Click <b>Verify and save</b>, then under Webhook fields turn on <b>messages</b> (Subscribe). Note: the free secure address changes when DInstinct restarts; DInstinct updates Meta automatically, but a hand-entered address must be updated by hand.</p></details>`;
-    if (current > 3) cards.push(done(3, "Connected to Meta", "Messages to the number now reach DInstinct. If the secure address changes, DInstinct tells Meta by itself.") .replace("</p></div>", `</p>${manual}</div>`));
+<p class="hint">Click <b>Verify and save</b>, then under Webhook fields turn on <b>messages</b> (Subscribe). Note: the free secure address changes when Distinct restarts; Distinct updates Meta automatically, but a hand-entered address must be updated by hand.</p></details>`;
+    if (current > 3) cards.push(done(3, "Connected to Meta", "Messages to the number now reach Distinct. If the secure address changes, Distinct tells Meta by itself.") .replace("</p></div>", `</p>${manual}</div>`));
     else if (current === 3) {
       const t = app.tunnel;
       refresh = t.state === "installing" || t.state === "starting";
@@ -454,7 +454,7 @@ ${
     ? refresh
       ? `<p>${esc(t.message || "Connecting…")}</p><p class="hint">This page updates by itself.</p>`
       : `<p>WhatsApp has to reach this PC over the internet. Turn on the secure connection first:</p><form method="post" action="/whatsapp/remote">${csrf()}<button>Turn on</button></form>${t.state === "error" ? `<p class="bad">${esc(t.message)}</p>` : ""}`
-    : `<p>One click and DInstinct tells Meta where to deliver your messages.</p><form method="post" action="/whatsapp/connect">${csrf()}<button>Connect WhatsApp</button></form>${manual}`
+    : `<p>One click and Distinct tells Meta where to deliver your messages.</p><form method="post" action="/whatsapp/connect">${csrf()}<button>Connect WhatsApp</button></form>${manual}`
 }</div>`);
     } else cards.push(todo(3, "Connect it"));
 
@@ -471,7 +471,7 @@ ${
 <p><a href="https://wa.me/${digitsOnly}?text=${p.code}" target="_blank" rel="noopener"><button type="button">Open WhatsApp with the code</button></a></p>
 <p class="hint">This page updates by itself once you're paired. Nothing arriving? Check the "To" list from step 2.</p></div>`);
       } else
-        cards.push(`<div class="card" style="border-color:var(--acc)"><h2>4. Say hello</h2><p>Get a code and send it from your phone, and DInstinct will know it's you.</p>
+        cards.push(`<div class="card" style="border-color:var(--acc)"><h2>4. Say hello</h2><p>Get a code and send it from your phone, and Distinct will know it's you.</p>
 <form method="post" action="/whatsapp/pair">${csrf()}<button>Get my code</button></form></div>`);
     } else cards.push(todo(4, "Say hello"));
 
@@ -480,14 +480,14 @@ ${
 ${w.tokenExpires ? `<p class="bad">Your access token is temporary and stops working ${new Date(w.tokenExpires).toLocaleString()}.</p>` : ""}</div>`);
 
     const permanent = `<details class="card"><summary><b>Make the access token permanent</b> <span class="hint">(the one from step 2 expires quickly)</span></summary>
-<p>1. Open <a href="https://business.facebook.com/latest/settings/system_users" target="_blank" rel="noopener">Meta Business settings → System Users</a> → <b>+ Add</b> → name it "DInstinct", role <b>Admin</b>.</p>
+<p>1. Open <a href="https://business.facebook.com/latest/settings/system_users" target="_blank" rel="noopener">Meta Business settings → System Users</a> → <b>+ Add</b> → name it "Distinct", role <b>Admin</b>.</p>
 <p>2. Open it and click <b>Assign assets</b>: choose your <b>app</b> and turn on <i>Manage app</i> (Full control); then your <b>WhatsApp account</b> and turn on <i>Manage WhatsApp Business accounts</i> (Full control) → <b>Assign assets</b>.</p>
 <p>3. Click <b>Generate token</b> → pick your app → choose the longest expiry offered (<b>Never</b> if shown) → tick <i>business_management</i>, <i>whatsapp_business_management</i> and <i>whatsapp_business_messaging</i> → <b>Generate token</b>.</p>
-<p>4. Paste it here (DInstinct checks it and shows if it ever expires):</p><form method="post" action="/whatsapp/token">${csrf()}<input name="token" type="password" autocomplete="off" required><button>Save permanent token</button></form></details>`;
+<p>4. Paste it here (Distinct checks it and shows if it ever expires):</p><form method="post" action="/whatsapp/token">${csrf()}<input name="token" type="password" autocomplete="off" required><button>Save permanent token</button></form></details>`;
 
     const html = page(
       "WhatsApp setup",
-      `<h1>Set up WhatsApp</h1><p class="sub">Like Instinct: your assistant gets its own WhatsApp number and you chat with it. Four steps; DInstinct checks each one for you.</p>
+      `<h1>Set up WhatsApp</h1><p class="sub">Like Instinct: your assistant gets its own WhatsApp number and you chat with it. Four steps; Distinct checks each one for you.</p>
 ${cards.join("")}${current >= 3 ? permanent : ""}`,
     );
     return refresh ? html.replace("<head>", '<head><meta http-equiv="refresh" content="3">') : html;
@@ -514,7 +514,7 @@ ${cards.join("")}${current >= 3 ? permanent : ""}`,
   const telegramForm = () => `<form class="card" method="post" action="/welcome/telegram">${csrf()}
 <h2>Telegram (recommended)</h2>
 <p>1. On your phone, open <a href="https://t.me/BotFather" target="_blank" rel="noopener"><b>@BotFather</b></a> in Telegram.</p>
-<p>2. Send <b>/newbot</b>, then pick any name, e.g. "My DInstinct".</p>
+<p>2. Send <b>/newbot</b>, then pick any name, e.g. "My Distinct".</p>
 <p>3. BotFather replies with a long code (the <i>token</i>). Copy it and paste it here:</p>
 <input name="token" autocomplete="off" placeholder="123456789:AA…" required><button>Connect</button></form>`;
 
@@ -528,9 +528,9 @@ ${cards.join("")}${current >= 3 ? permanent : ""}`,
     const llm = app.cfg.llm.provider === "ollama" ? "your local model (nothing leaves this PC)" : `Claude via the Anthropic API (not used for model training by default)`;
     return page(
       "Data & connections",
-      `<h1>Data &amp; connections</h1><p class="sub">What DInstinct can reach, what it keeps, and how to take it all back.</p>${msg ? `<p class="${/connected|revoked/i.test(msg) ? "ok" : "bad"}">${esc(msg)}</p>` : ""}
+      `<h1>Data &amp; connections</h1><p class="sub">What Distinct can reach, what it keeps, and how to take it all back.</p>${msg ? `<p class="${/connected|revoked/i.test(msg) ? "ok" : "bad"}">${esc(msg)}</p>` : ""}
 <div class="card"><h2>Google Workspace</h2>
-${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive, Docs, Sheets, Slides, Tasks.</p><p class="hint">Read on demand only; nothing is copied or indexed. Sending email, calendar changes and edits always ask you YES first.</p><form method="post" action="/google/disconnect">${csrf()}<button class="ghost">Disconnect and revoke access</button></form>` : `<p class="hint">Lets DInstinct read and act in Gmail, Calendar, Drive, Docs, Sheets, Slides and Tasks, and power the morning briefing. Uses your own Google OAuth client (Settings), so no middleman.</p><p><a href="/google/connect"><button type="button">Connect Google</button></a></p>`}</div>
+${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive, Docs, Sheets, Slides, Tasks.</p><p class="hint">Read on demand only; nothing is copied or indexed. Sending email, calendar changes and edits always ask you YES first.</p><form method="post" action="/google/disconnect">${csrf()}<button class="ghost">Disconnect and revoke access</button></form>` : `<p class="hint">Lets Distinct read and act in Gmail, Calendar, Drive, Docs, Sheets, Slides and Tasks, and power the morning briefing. Uses your own Google OAuth client (Settings), so no middleman.</p><p><a href="/google/connect"><button type="button">Connect Google</button></a></p>`}</div>
 <div class="card"><h2>Where your data lives</h2><table>
 <tr><td>Vault, tokens, memories, reminders</td><td>Encrypted in <code>data/vault.dat</code> on this PC</td></tr>
 <tr><td>AI model</td><td>${esc(llm)}. Start a message with <b>private:</b> to keep that task on the local model.</td></tr>
@@ -548,7 +548,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
   const fillPage = (token: string, msg = "") => {
     const f = app.core.fills.get(token);
     if (!f || Date.now() > f.expires) return page("Link expired", `<h1>This link no longer works</h1><p class="sub">It was already used or expired. Ask your assistant for a new one.</p>`, false);
-    if (!app.vault.isUnlocked()) return page("Locked", `<h1>DInstinct is locked</h1><p class="sub">Unlock it on your PC, then open this link again.</p>`, false);
+    if (!app.vault.isUnlocked()) return page("Locked", `<h1>Distinct is locked</h1><p class="sub">Unlock it on your PC, then open this link again.</p>`, false);
     const inputs = f.fields
       .map((x) => `<label>${esc(x.label)}</label><input name="f_${esc(x.key)}" type="${x.secret ? "password" : "text"}" autocomplete="off" autocapitalize="off" spellcheck="false">`)
       .join("");
@@ -558,7 +558,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
 <form class="card" method="post"><h2>${esc(f.name)} <span class="pill">${esc(f.kind)}</span></h2>${inputs}
 <label>Can be used on these sites only</label><input name="sites" value="${esc(f.sites.join(", "))}">
 <p class="hint">Encrypted with your master password on your PC. Your assistant can type it into these sites but can never read it.</p>
-<p class="rule">Never enter card numbers, bank accounts or PINs here. DInstinct refuses them.</p>
+<p class="rule">Never enter card numbers, bank accounts or PINs here. Distinct refuses them.</p>
 <button name="action" value="save">Save encrypted</button> <button class="ghost" name="action" value="cancel">Cancel</button></form>`,
       false,
     );
@@ -635,7 +635,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
           const lang = app.cfg.phone.language || "en-US";
           const xmlRes = (s: string) => send(res, 200, s, "text/xml; charset=utf-8");
           const fullUrl = app.cfg.publicUrl.replace(/\/$/, "") + (req.url ?? p);
-          if (!app.cfg.phone.enabled || !app.vault.isUnlocked()) return xmlRes(twiml({ say: ["DInstinct is not available right now."], hangup: true, language: lang }));
+          if (!app.cfg.phone.enabled || !app.vault.isUnlocked()) return xmlRes(twiml({ say: ["Distinct is not available right now."], hangup: true, language: lang }));
           if (!twilioSignatureValid(app.vault.getSystem("twilio_auth_token"), fullUrl, form, req.headers["x-twilio-signature"] as string | undefined)) {
             audit("phone_bad_signature");
             return send(res, 403, "forbidden", "text/plain");
@@ -647,7 +647,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
           const gather = { action: "/voice/speech", prompt: "" };
           if (p === "/voice/incoming") {
             const name = app.cfg.ownerName ? `, ${app.cfg.ownerName}` : "";
-            return xmlRes(twiml({ gather: { ...gather, prompt: `Hi${name}, it's DInstinct. What can I do for you?` }, language: lang }));
+            return xmlRes(twiml({ gather: { ...gather, prompt: `Hi${name}, it's Distinct. What can I do for you?` }, language: lang }));
           }
           const said = (form.get("SpeechResult") ?? "").trim();
           if (!said) return xmlRes(twiml({ gather: { ...gather, prompt: "Sorry, I didn't catch that. Could you say it again?" }, language: lang }));
@@ -670,7 +670,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
         // Public: iPhone Shortcut
         if (p === "/iphone" && m === "POST") {
           if (!app.cfg.iphone.enabled) return send(res, 404, "off", "text/plain");
-          if (!app.vault.isUnlocked()) return send(res, 503, "DInstinct is locked. Unlock it on your PC.", "text/plain");
+          if (!app.vault.isUnlocked()) return send(res, 503, "Distinct is locked. Unlock it on your PC.", "text/plain");
           const auth = String(req.headers.authorization ?? "");
           if (!safeEqual(auth, `Bearer ${app.vault.getSystem("iphone_token")}`)) {
             audit("iphone_rejected");
@@ -721,7 +721,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
           if (p === "/data/export") {
             res.writeHead(200, {
               "content-type": "application/json; charset=utf-8",
-              "content-disposition": `attachment; filename="dinstinct-export-${new Date().toISOString().slice(0, 10)}.json"`,
+              "content-disposition": `attachment; filename="distinct-export-${new Date().toISOString().slice(0, 10)}.json"`,
               "cache-control": "no-store",
             });
             return res.end(JSON.stringify(app.exportData(), null, 2));
@@ -875,7 +875,7 @@ ${g.connected() ? `<p>Connected as <b>${esc(email)}</b>: Gmail, Calendar, Drive,
               app.saveConfig(); // starts the WhatsApp channel so Meta's check gets an answer
               await app.connectWhatsAppWebhook();
               app.vault.setState("whatsapp_webhook_url", app.cfg.publicUrl);
-              return back("", "Connected. Meta will now deliver your messages to DInstinct.");
+              return back("", "Connected. Meta will now deliver your messages to Distinct.");
             }
             if (p === "/whatsapp/pair") {
               app.startPairing();

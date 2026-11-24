@@ -76,11 +76,11 @@ export class Telegram {
             if (this.onStranger(from, msg.text, msg.from?.first_name ?? "")) {
               this.allowed.add(from);
               this.lastChatId = chatId;
-              await this.send(chatId, "✅ Paired! I'm your DInstinct assistant. Ask me anything, e.g. \"find me a padel court for Saturday\".");
+              await this.send(chatId, "✅ Paired! I'm your Distinct assistant. Ask me anything, e.g. \"find me a padel court for Saturday\".");
               continue;
             }
             audit("telegram_rejected", { from });
-            await this.send(chatId, "This assistant is private. If it's yours, open DInstinct on your PC and send the pairing code shown there.");
+            await this.send(chatId, "This assistant is private. If it's yours, open Distinct on your PC and send the pairing code shown there.");
             continue;
           }
           this.lastChatId = chatId;

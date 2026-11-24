@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { Vault, hostMatches, normalizeSite } from "../src/vault.ts";
 
-const tmp = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-")), "vault.dat");
+const tmp = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), "distinct-")), "vault.dat");
 
 test("vault encrypts at rest and round-trips", async () => {
   const file = tmp();

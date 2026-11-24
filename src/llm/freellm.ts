@@ -1,7 +1,7 @@
 // Free models through FreeLLMAPI (https://freellmapi.co): an open-source router you run on this PC.
 // You add free-tier keys (Gemini, Groq, OpenRouter, NVIDIA…) in its dashboard; it exposes one
 // OpenAI-compatible address and routes each request to a free model ("auto:smart", "auto:fast"…).
-// DInstinct talks to it like any OpenAI-style server, with tool calling.
+// Distinct talks to it like any OpenAI-style server, with tool calling.
 import { randomUUID } from "node:crypto";
 import type { Config } from "../config.ts";
 import type { Block, ChatRequest, ChatResult, Message, Provider } from "./types.ts";
@@ -127,8 +127,8 @@ export function freeProvider(cfg: Config["llm"], key: string): Provider {
     },
     describeError(err: unknown): string | null {
       const m = String((err as any)?.message ?? err);
-      if (m === "FREELLM_NO_KEY") return "The free models aren't set up yet. On your PC open DInstinct → Settings → Free models and paste your FreeLLMAPI key.";
-      if (/FREELLM_40[13]/.test(m)) return "FreeLLMAPI didn't accept the key. On your PC, copy it again from the FreeLLMAPI tray icon (Copy Key) into DInstinct → Settings.";
+      if (m === "FREELLM_NO_KEY") return "The free models aren't set up yet. On your PC open Distinct → Settings → Free models and paste your FreeLLMAPI key.";
+      if (/FREELLM_40[13]/.test(m)) return "FreeLLMAPI didn't accept the key. On your PC, copy it again from the FreeLLMAPI tray icon (Copy Key) into Distinct → Settings.";
       if (/FREELLM_429/.test(m)) return "The free models are out of quota for now. Add more free provider keys in FreeLLMAPI, wait a bit, or switch to Claude.";
       if (/FREELLM_\d+/.test(m)) return `The free model router had a problem: ${m.replace(/^FREELLM_/, "").slice(0, 200)}`;
       if (err instanceof TypeError || /fetch failed|ECONNREFUSED|timeout/i.test(m)) return "FreeLLMAPI isn't running on your PC. Start the FreeLLMAPI app (tray icon) and ask me again.";

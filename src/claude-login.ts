@@ -9,7 +9,13 @@ import Anthropic from "@anthropic-ai/sdk";
 import { audit } from "./config.ts";
 import { diagnose } from "./netcheck.ts";
 
-export const PROFILE = "dinstinct";
+/** Sign-in profile name. Installs from before the rename used "dinstinct"; keep using it if that's the one on this PC. */
+function pickProfile(): string {
+  const dir = process.env.ANTHROPIC_CONFIG_DIR || path.join(process.env.APPDATA ?? "", "Anthropic");
+  const has = (name: string) => fs.existsSync(path.join(dir, "configs", `${name}.json`));
+  return !has("distinct") && has("dinstinct") ? "dinstinct" : "distinct";
+}
+export const PROFILE = pickProfile();
 
 const KNOWN = [
   `${process.env.LOCALAPPDATA}\\Microsoft\\WinGet\\Links\\ant.exe`,

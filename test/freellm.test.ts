@@ -44,7 +44,7 @@ test("FreeLLMAPI: detect, list free models, and a tool-calling task", async () =
   assert.ok(models.some((m) => m.id === "glm-5.3"));
   assert.ok(!models.some((m) => m.id === "kimi-k3"), "only models ready to use");
 
-  const v = new Vault(path.join(fs.mkdtempSync(path.join(os.tmpdir(), "dinstinct-free-")), "vault.dat"));
+  const v = new Vault(path.join(fs.mkdtempSync(path.join(os.tmpdir(), "distinct-free-")), "vault.dat"));
   await v.create("correct horse battery");
   v.setSystem("freellm_api_key", KEY);
   const cfg = structuredClone(DEFAULTS);
