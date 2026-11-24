@@ -16,6 +16,12 @@
   <img alt="Tests" src="https://img.shields.io/badge/tests-29%20passing-brightgreen">
 </p>
 
+<p align="center">
+  <a href="https://claudioak.github.io/DInstinct/"><b>🌐 Website</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/ClaudioAk/DInstinct/releases/latest/download/DInstinct.zip"><b>⬇ Download for Windows</b></a> &nbsp;·&nbsp;
+  <a href="#quick-start"><b>Quick start</b></a>
+</p>
+
 ---
 
 DInstinct is an **agent**: give it a goal ("book a padel court for Saturday", "make me a playlist on Anghami", "chase the landlord about the deposit") and it plans, opens websites in its own browser, signs in with logins from your vault, asks you when it needs something, and finishes the job.
