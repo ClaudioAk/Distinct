@@ -137,10 +137,26 @@ function restore() {
   if (!finished) log(`The last run stopped during "${r.lastStep}". If the page reloaded by itself, iOS ran out of memory.`, 'err');
 }
 
+let current = null;
+// GPU loss and async failures do not reach the try/catch, so record them here.
+window.addEventListener('unhandledrejection', ev => {
+  if (!current) return;
+  current.error = 'unhandled: ' + String(ev.reason?.message || ev.reason);
+  save(current, current.lastStep + ' (error)');
+  log(current.error, 'err');
+});
+window.addEventListener('error', ev => {
+  if (!current) return;
+  current.error = 'error: ' + String(ev.message);
+  save(current, current.lastStep + ' (error)');
+});
+
 $('go').onclick = async () => {
   $('go').disabled = true;
+  $('copy').disabled = true; $('copy').textContent = 'Copy results (after the test)';
   await keepAwake();
   const result = { test: 'distinct-mesh-phone', at: new Date().toISOString(), ua: navigator.userAgent };
+  current = result;
   save(result, 'starting');
   try {
     const gpu = await detect();
@@ -154,10 +170,11 @@ $('go').onclick = async () => {
     log('Downloading the model (about 340 MB, cached after the first run)…');
     save(result, 'loading model');
     const t0 = performance.now();
+    // 1024-token context keeps the KV cache near 115 MB instead of ~470 MB, which iOS tabs can afford.
     const engine = await webllm.CreateMLCEngine(id, {
       initProgressCallback: p => { $('state').textContent = (p.text || '').slice(0, 44); $('prog').style.width = Math.round((p.progress || 0) * 100) + '%'; },
-    });
-    result.model = { id, loadSeconds: +((performance.now() - t0) / 1000).toFixed(1) };
+    }, { context_window_size: 1024 });
+    result.model = { id, contextTokens: 1024, loadSeconds: +((performance.now() - t0) / 1000).toFixed(1) };
     $('load').textContent = `${result.model.loadSeconds} s`;
     log(`Model ready in ${result.model.loadSeconds} s`, 'ok');
 
@@ -170,6 +187,7 @@ $('go').onclick = async () => {
       const x = r.usage?.extra || {};
       runs.push({ decode: x.decode_tokens_per_s, prefill: x.prefill_tokens_per_s });
       log(`speed run ${i + 1}: ${x.decode_tokens_per_s?.toFixed(1)} tok/s`);
+      result.speedRuns = runs; save(result, `measuring speed (run ${i + 2} of 3)`);
     }
     const avg = k => +(runs.reduce((s, o) => s + (o[k] || 0), 0) / runs.length).toFixed(1);
     result.speed = { decodeTokS: avg('decode'), prefillTokS: avg('prefill'), runs };
@@ -199,6 +217,7 @@ $('go').onclick = async () => {
     save(result, 'error');
   } finally {
     $('go').disabled = false; $('go').textContent = 'Run again';
+    $('copy').disabled = false; $('copy').textContent = 'Copy results';
   }
 };
 
