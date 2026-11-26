@@ -67,7 +67,7 @@
 
   <button id="go">Start test</button>
 
-  <section class="card" aria-label="Copy results" id="copybox" hidden>
+  <section class="card" aria-label="Copy results" id="copybox">
     <h2>Send these results</h2>
     <textarea id="out" readonly aria-label="Results as text"></textarea>
     <button class="secondary" id="copy" style="margin-top:8px">Copy results</button>
@@ -116,10 +116,32 @@ const ask = (engine, content, max_tokens, extra = {}) => engine.chat.completions
   extra_body: { enable_thinking: false }, ...extra,
 });
 
+// Results are saved after every step, so an iOS tab reload (out of memory) keeps what was measured.
+const KEY = 'distinct-mesh-phone-result';
+function save(result, step) {
+  result.lastStep = step;
+  $('out').value = JSON.stringify(result);
+  try { localStorage.setItem(KEY, $('out').value); } catch { /* storage optional */ }
+}
+function restore() {
+  let r = null;
+  try { r = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch { /* ignore */ }
+  if (!r) { $('out').value = 'No results yet. Tap Start test.'; return; }
+  $('out').value = JSON.stringify(r);
+  if (r.model) $('load').textContent = `${r.model.loadSeconds} s`;
+  if (r.speed) { $('decode').textContent = `${r.speed.decodeTokS} tok/s`; $('prefill').textContent = `${r.speed.prefillTokS} tok/s`; }
+  if (r.routing) { $('acc').textContent = `${r.routing.correct} / ${r.routing.total}`; $('jobms').textContent = `${r.routing.msPerJob} ms`; }
+  const finished = r.lastStep === 'done';
+  $('state').textContent = finished ? 'done (saved result)' : `stopped during: ${r.lastStep}`;
+  $('state').className = finished ? 'ok' : 'err';
+  if (!finished) log(`The last run stopped during "${r.lastStep}". If the page reloaded by itself, iOS ran out of memory.`, 'err');
+}
+
 $('go').onclick = async () => {
   $('go').disabled = true;
   await keepAwake();
   const result = { test: 'distinct-mesh-phone', at: new Date().toISOString(), ua: navigator.userAgent };
+  save(result, 'starting');
   try {
     const gpu = await detect();
     result.gpu = gpu;
@@ -130,6 +152,7 @@ $('go').onclick = async () => {
     const id = `Qwen3-0.6B-${gpu.f16 ? 'q4f16_1' : 'q4f32_1'}-MLC`;
     $('model').textContent = id;
     log('Downloading the model (about 340 MB, cached after the first run)…');
+    save(result, 'loading model');
     const t0 = performance.now();
     const engine = await webllm.CreateMLCEngine(id, {
       initProgressCallback: p => { $('state').textContent = (p.text || '').slice(0, 44); $('prog').style.width = Math.round((p.progress || 0) * 100) + '%'; },
@@ -139,6 +162,7 @@ $('go').onclick = async () => {
     log(`Model ready in ${result.model.loadSeconds} s`, 'ok');
 
     $('state').textContent = 'measuring speed';
+    save(result, 'measuring speed');
     await ask(engine, 'Say hi.', 4);  // warm-up
     const runs = [];
     for (let i = 0; i < 3; i++) {
@@ -153,6 +177,7 @@ $('go').onclick = async () => {
     $('prefill').textContent = `${result.speed.prefillTokS} tok/s`;
 
     $('state').textContent = 'routing test';
+    save(result, 'routing test');
     let correct = 0; const routes = []; const tr = performance.now();
     for (const [q, want] of REQUESTS) {
       const r = await ask(engine, routePrompt(q), 8);
@@ -160,19 +185,19 @@ $('go').onclick = async () => {
       if (got === want) correct++;
       routes.push([want, got]);
       $('acc').textContent = `${correct} / ${routes.length}`;
+      result.routing = { correct, total: routes.length, msPerJob: Math.round((performance.now() - tr) / routes.length), misses: routes.filter(([w, g]) => w !== g) };
+      save(result, 'routing test');
     }
-    const perJob = (performance.now() - tr) / REQUESTS.length;
-    result.routing = { correct, total: REQUESTS.length, msPerJob: Math.round(perJob), misses: routes.filter(([w, g]) => w !== g) };
-    $('jobms').textContent = `${Math.round(perJob)} ms`;
+    $('jobms').textContent = `${result.routing.msPerJob} ms`;
     $('state').textContent = 'done'; $('state').className = 'ok';
     log('Test finished', 'ok');
+    save(result, 'done');
   } catch (e) {
     result.error = String(e?.stack || e);
     $('state').textContent = 'error'; $('state').className = 'err';
     log('Error: ' + (e?.message || e), 'err');
+    save(result, 'error');
   } finally {
-    $('out').value = JSON.stringify(result);
-    $('copybox').hidden = false;
     $('go').disabled = false; $('go').textContent = 'Run again';
   }
 };
@@ -182,6 +207,7 @@ $('copy').onclick = async () => {
   catch { $('out').select(); $('copy').textContent = 'Select all and copy'; }
 };
 
+restore();
 detect();
 </script>
 </body>
