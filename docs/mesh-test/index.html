@@ -61,8 +61,9 @@
     <div class="row"><span>Model load</span><span id="load">–</span></div>
     <div class="row"><span>Writing speed</span><span id="decode">–</span></div>
     <div class="row"><span>Prompt reading speed</span><span id="prefill">–</span></div>
-    <div class="row"><span>Routing accuracy (20 requests)</span><span id="acc">–</span></div>
-    <div class="row"><span>Time per routing job</span><span id="jobms">–</span></div>
+    <div class="row"><span>Routing, free answer (of 20)</span><span id="accFree">–</span></div>
+    <div class="row"><span>Routing, forced answer (of 20)</span><span id="accForced">–</span></div>
+    <div class="row"><span>Time per routing job (forced)</span><span id="jobms">–</span></div>
   </section>
 
   <button id="go">Start test</button>
@@ -95,7 +96,35 @@ const REQUESTS = [
   ['Polish this paragraph', 'writer'], ['List running services', 'shell'],
   ['Schedule the steps for the audit', 'planner'], ['Delete temp files older than 30 days', 'files'],
 ];
-const routePrompt = q => `Classify the request into exactly one agent: ${AGENTS.join(', ')}. Answer with one word.\nRequest: ${q}`;
+const ROUTE_SYSTEM = `You route requests to one agent.
+files: find, move, rename, copy, zip or delete files and folders
+office: Excel or Word work: spreadsheets, formulas, pivots, tables, reports
+writer: write or rewrite text: emails, replies, posts, summaries
+shell: computer and system tasks: commands, services, disk, network, IP
+planner: only when the user asks for a plan, schedule or step-by-step breakdown
+Reply with the agent name only.`;
+// One worked example per agent (none of them are in the 20 test requests).
+const ROUTE_EXAMPLES = [
+  ['Rename report.docx to final.docx', 'files'], ['Add a SUM row to sales.xlsx', 'office'],
+  ['Write a thank-you email to the team', 'writer'], ['Show my IP address', 'shell'],
+  ['Make a plan for moving offices', 'planner'],
+];
+const routeMessages = (q, forced) => [
+  { role: 'system', content: ROUTE_SYSTEM },
+  ...ROUTE_EXAMPLES.flatMap(([ex, a]) => [
+    { role: 'user', content: ex },
+    { role: 'assistant', content: forced ? JSON.stringify({ agent: a }) : a },
+  ]),
+  { role: 'user', content: q },
+];
+// Forced answer: the model can only produce {"agent": "<one of the five>"}.
+const ROUTE_FORMAT = { type: 'json_object', schema: JSON.stringify({
+  type: 'object', properties: { agent: { type: 'string', enum: AGENTS } }, required: ['agent'], additionalProperties: false,
+}) };
+// Qwen3 may prefix an empty <think></think> block even with thinking off; drop it before reading the answer.
+const stripThink = t => (t || '').replace(/<think>[\s\S]*?<\/think>/g, '').trim();
+const pickWord = t => stripThink(t).toLowerCase().match(/[a-z]+/g)?.find(w => AGENTS.includes(w)) || '?';
+const pickJson = t => { try { const a = JSON.parse(stripThink(t)).agent; return AGENTS.includes(a) ? a : '?'; } catch { return '?'; } };
 
 let wakeLock = null;
 async function keepAwake() { try { wakeLock = await navigator.wakeLock?.request('screen'); } catch { /* optional */ } }
@@ -112,7 +141,7 @@ async function detect() {
 }
 
 const ask = (engine, content, max_tokens, extra = {}) => engine.chat.completions.create({
-  messages: [{ role: 'user', content }], max_tokens, temperature: 0,
+  messages: Array.isArray(content) ? content : [{ role: 'user', content }], max_tokens, temperature: 0,
   extra_body: { enable_thinking: false }, ...extra,
 });
 
@@ -130,7 +159,8 @@ function restore() {
   $('out').value = JSON.stringify(r);
   if (r.model) $('load').textContent = `${r.model.loadSeconds} s`;
   if (r.speed) { $('decode').textContent = `${r.speed.decodeTokS} tok/s`; $('prefill').textContent = `${r.speed.prefillTokS} tok/s`; }
-  if (r.routing) { $('acc').textContent = `${r.routing.correct} / ${r.routing.total}`; $('jobms').textContent = `${r.routing.msPerJob} ms`; }
+  if (r.routing?.free) $('accFree').textContent = `${r.routing.free.correct} / ${r.routing.free.total}`;
+  if (r.routing?.forced) { $('accForced').textContent = `${r.routing.forced.correct} / ${r.routing.forced.total}`; $('jobms').textContent = `${r.routing.forced.msPerJob} ms`; }
   const finished = r.lastStep === 'done';
   $('state').textContent = finished ? 'done (saved result)' : `stopped during: ${r.lastStep}`;
   $('state').className = finished ? 'ok' : 'err';
@@ -171,7 +201,15 @@ $('go').onclick = async () => {
     save(result, 'loading model');
     const t0 = performance.now();
     // 1024-token context keeps the KV cache near 115 MB instead of ~470 MB, which iOS tabs can afford.
+    // Opened from 127.0.0.1 (developer test): load the same files from the local server instead of Hugging Face.
+    const local = location.hostname === '127.0.0.1';
+    const variant = gpu.f16 ? 'q4f16_1' : 'q4f32_1';
+    const appConfig = local ? { useIndexedDBCache: false, model_list: [{
+      model: `${location.origin}/models/${id}`, model_id: id,
+      model_lib: `${location.origin}/libs/Qwen3-0.6B-${variant}_cs1k-webgpu.wasm`,
+      required_features: gpu.f16 ? ['shader-f16'] : [] }] } : undefined;
     const engine = await webllm.CreateMLCEngine(id, {
+      ...(appConfig ? { appConfig } : {}),
       initProgressCallback: p => { $('state').textContent = (p.text || '').slice(0, 44); $('prog').style.width = Math.round((p.progress || 0) * 100) + '%'; },
     }, { context_window_size: 1024 });
     result.model = { id, contextTokens: 1024, loadSeconds: +((performance.now() - t0) / 1000).toFixed(1) };
@@ -194,19 +232,29 @@ $('go').onclick = async () => {
     $('decode').textContent = `${result.speed.decodeTokS} tok/s`;
     $('prefill').textContent = `${result.speed.prefillTokS} tok/s`;
 
-    $('state').textContent = 'routing test';
-    save(result, 'routing test');
-    let correct = 0; const routes = []; const tr = performance.now();
-    for (const [q, want] of REQUESTS) {
-      const r = await ask(engine, routePrompt(q), 8);
-      const got = (r.choices[0].message.content || '').toLowerCase().match(/[a-z]+/g)?.find(w => AGENTS.includes(w)) || '?';
-      if (got === want) correct++;
-      routes.push([want, got]);
-      $('acc').textContent = `${correct} / ${routes.length}`;
-      result.routing = { correct, total: routes.length, msPerJob: Math.round((performance.now() - tr) / routes.length), misses: routes.filter(([w, g]) => w !== g) };
-      save(result, 'routing test');
+    // Same prompt twice: a free answer with room to write, then an answer forced to one agent name.
+    const modes = [
+      { key: 'free', label: 'routing, free answer', cell: 'accFree', opts: {}, maxTokens: 24, pick: pickWord },
+      { key: 'forced', label: 'routing, forced answer', cell: 'accForced', opts: { response_format: ROUTE_FORMAT }, maxTokens: 24, pick: pickJson },
+    ];
+    result.routing = {};
+    for (const m of modes) {
+      $('state').textContent = m.label;
+      save(result, m.label);
+      let correct = 0; const routes = []; const tr = performance.now();
+      for (const [q, want] of REQUESTS) {
+        const r = await ask(engine, routeMessages(q, m.key === 'forced'), m.maxTokens, m.opts);
+        const raw = r.choices[0].message.content || '';
+        const got = m.pick(raw);
+        if (got === want) correct++;
+        routes.push({ q, want, got, raw: raw.slice(0, 40) });
+        $(m.cell).textContent = `${correct} / ${routes.length}`;
+        result.routing[m.key] = { correct, total: routes.length, msPerJob: Math.round((performance.now() - tr) / routes.length),
+                                  misses: routes.filter(x => x.want !== x.got) };
+        save(result, m.label);
+      }
     }
-    $('jobms').textContent = `${result.routing.msPerJob} ms`;
+    $('jobms').textContent = `${result.routing.forced.msPerJob} ms`;
     $('state').textContent = 'done'; $('state').className = 'ok';
     log('Test finished', 'ok');
     save(result, 'done');
